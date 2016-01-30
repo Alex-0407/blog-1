@@ -1,0 +1,977 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Nodejs, 前端, ES6" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Highway to the Wild" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.0" />
+
+
+
+
+
+
+<meta name="description" content="正文16年开发 node 项目，会有什么不一样吗？！ 当然随着语言，工具，运行环境，开发方式的不断变化，你的 node 项目当然也需要不断的与时俱进，那么我们就依次来看看需要注意哪些问题吧。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Node】16年，新 Node 项目注意点">
+<meta property="og:url" content="http://sivagao.com/2016-01/node-新项目注意点-2016篇/index.html">
+<meta property="og:site_name" content="Highway to the Wild">
+<meta property="og:description" content="正文16年开发 node 项目，会有什么不一样吗？！ 当然随着语言，工具，运行环境，开发方式的不断变化，你的 node 项目当然也需要不断的与时俱进，那么我们就依次来看看需要注意哪些问题吧。">
+<meta property="og:updated_time" content="2016-01-30T14:24:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Node】16年，新 Node 项目注意点">
+<meta name="twitter:description" content="正文16年开发 node 项目，会有什么不一样吗？！ 当然随着语言，工具，运行环境，开发方式的不断变化，你的 node 项目当然也需要不断的与时俱进，那么我们就依次来看看需要注意哪些问题吧。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: '[object Object]',
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 【Node】16年，新 Node 项目注意点 | Highway to the Wild </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?968e1699fcafa46aee46e5335eb493d7";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Highway to the Wild</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">数字游民的养成~</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                【Node】16年，新 Node 项目注意点
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-01-11T07:56:29+08:00" content="2016-01-11">
+              2016-01-11
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016-01/node-新项目注意点-2016篇/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016-01/node-新项目注意点-2016篇/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016-01/node-新项目注意点-2016篇/" class="leancloud_visitors" data-flag-title="【Node】16年，新 Node 项目注意点">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="u6B63_u6587"><a href="#u6B63_u6587" class="headerlink" title="正文"></a>正文</h2><p>16年开发 node 项目，会有什么不一样吗？！ 当然随着语言，工具，运行环境，开发方式的不断变化，你的 node 项目当然也需要不断的与时俱进，那么我们就依次来看看需要注意哪些问题吧。<br><a id="more"></a><br>目录</p>
+<ul>
+<li>现在开始使用 ES2015</li>
+<li>异步函数支持回调惯例和Promise新写法</li>
+<li>异步模式</li>
+<li>错误处理</li>
+<li>使用标准的 JavaScript 代码风格</li>
+<li>Web 应用开发的十二条军规</li>
+<li>始终用 npm init 开始新项目</li>
+<li>文件名始终小写</li>
+<li>智能的 .npmrc 和正确的版本管理做法</li>
+<li>及时更新依赖</li>
+<li>选择合适的数据库</li>
+<li>监控你的应用程序</li>
+<li>使用构建系统</li>
+<li>NPM 生命周期钩子</li>
+<li>管好垃圾回收</li>
+<li>使用长期支持的 Node.js 版本</li>
+<li>使用语义化的版本号</li>
+<li>持续学习和跟上潮流</li>
+</ul>
+<h3 id="u73B0_u5728_u5F00_u59CB_u4F7F_u7528_ES2015"><a href="#u73B0_u5728_u5F00_u59CB_u4F7F_u7528_ES2015" class="headerlink" title="现在开始使用 ES2015"></a>现在开始使用 ES2015</h3><p>箭头函数<br>模板字符串<br>rest参数，扩展运算符(spread),函数默认值<br>变量的解构赋值<br>generator 和 promises<br>maps，sets 和 symbols</p>
+<p>这些新语法大部分都被 Node.js V4 支持(参考)[<a href="https://nodejs.org/en/docs/es6/" target="_blank" rel="external">https://nodejs.org/en/docs/es6/</a>]<br>在服务器端的推荐使用新的 node 解释器支持的语法，或者可以用babel作为compile层（具体做法参考<a href="https://github.com/gf-rd/gf-skeleton-node" target="_blank" rel="external">脚手架</a>）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从 express's req.query 解构 特定参数 ?page=2&amp;size=10&amp;word=测试</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> &#123;page, size, word&#125; = req.query;</span><br></pre></td></tr></table></figure>
+<h3 id="u5F02_u6B65_u51FD_u6570_u652F_u6301_u56DE_u8C03_u60EF_u4F8B_u548CPromise_u65B0_u5199_u6CD5"><a href="#u5F02_u6B65_u51FD_u6570_u652F_u6301_u56DE_u8C03_u60EF_u4F8B_u548CPromise_u65B0_u5199_u6CD5" class="headerlink" title="异步函数支持回调惯例和Promise新写法"></a>异步函数支持回调惯例和Promise新写法</h3><p>过去，当Promise没有成为Node默认搭载的语法时，推荐模块通过导出 error-first callback 的接口形式。但是现在通常需要支持两种形式：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">readPackage</span>(<span class="params">callback=noop</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>((resolve, reject)=&gt;&#123;</span><br><span class="line">    fs.readFile(<span class="string">'./package.json'</span>, (err, data)=&gt;&#123;</span><br><span class="line">      <span class="keyword">if</span>(err) &#123;</span><br><span class="line">        reject(err)</span><br><span class="line">        <span class="keyword">return</span> callback(err)</span><br><span class="line">      &#125;</span><br><span class="line">      resolve(data)</span><br><span class="line">      <span class="keyword">return</span> callback(<span class="literal">null</span>, data)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="u5F02_u6B65_u6A21_u5F0F"><a href="#u5F02_u6B65_u6A21_u5F0F" class="headerlink" title="异步模式"></a>异步模式</h3><p>过去很长时间，在 node 中一般有两种方式来管理异步流：callback回调和 streams 流<br>前者可以用辅助我们异步操作的 async 类库<br>后者可以用through, bl or highland 这些类库<br>但是随着 es6的 generator和promise的到来，甚至es7的 await/async 内建关键字的到来，情况变了。 详细请看 <a href="https://blog.risingstack.com/asynchronous-javascript/" target="_blank" rel="external">异步JavaScript的演进</a></p>
+<h3 id="u9519_u8BEF_u5904_u7406"><a href="#u9519_u8BEF_u5904_u7406" class="headerlink" title="错误处理"></a>错误处理</h3><p>完善合理的错误处理让你的服务更加强健。知道何时crash，然后是仅仅catch后忽略，还是记下调用栈打入log后重试，甚至是需要重启？<br>我们通常需要区别对待 programmer error, operational errors:<br>前者直接重启（事实上在开发阶段就该发现，并且线上通过 logger 定位），因为程序员写的bug，如果不及时重启会导致应用的状态难以推演，从而发生更多更大的问题<br>而后者，通常不是bug，而是没有考虑全的case。如外部请求超时了，外部依赖的数据库连不上了，甚至所在运行的机器磁盘写满了，要访问写入的文件暂时不存在了。这些case一般需要在程序里加上特定的fallback/polyfill 来处理。如对于超时的重试几次，对于不存在的文件先试着创建新文件，对于总是塞满磁盘的log，通过logstash和logrotate去处理。</p>
+<h4 id="u56DE_u8C03_u4E2D_u7684_u9519_u8BEF_u5904_u7406"><a href="#u56DE_u8C03_u4E2D_u7684_u9519_u8BEF_u5904_u7406" class="headerlink" title="回调中的错误处理"></a>回调中的错误处理</h4><p>error-first 约定的callback，始终记得在函数开始检查第一个err是否存在，然后进行合适的处理（当然也可以通过 next(e) 传入到调用栈的最后统一处理）</p>
+<h4 id="Promise_u4E2D_u7684_u9519_u8BEF_u5904_u7406"><a href="#Promise_u4E2D_u7684_u9519_u8BEF_u5904_u7406" class="headerlink" title="Promise中的错误处理"></a>Promise中的错误处理</h4><p>始终记得在 promise 调用链的最后加上 catch 来处理异常</p>
+<h3 id="u4F7F_u7528_u6807_u51C6_u7684_JavaScript__u4EE3_u7801_u98CE_u683C"><a href="#u4F7F_u7528_u6807_u51C6_u7684_JavaScript__u4EE3_u7801_u98CE_u683C" class="headerlink" title="使用标准的 JavaScript 代码风格"></a>使用标准的 JavaScript 代码风格</h3><p>过去我们使用 jslint, jshint, jscs 来作为我们的代码风格检查工具，但是随着 es6 的流行，还有一些新的习惯的养成，我们推荐使用 eslint 工具，同时配合 eslint-plugin-standard 插件</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">plugins</span>": <span class="value">[</span><br><span class="line">    <span class="string">"standard"</span></span><br><span class="line">  ]</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Web__u5E94_u7528_u5F00_u53D1_u7684_u5341_u4E8C_u6761_u519B_u89C4"><a href="#Web__u5E94_u7528_u5F00_u53D1_u7684_u5341_u4E8C_u6761_u519B_u89C4" class="headerlink" title="Web 应用开发的十二条军规"></a>Web 应用开发的十二条军规</h3><p>来自于 Rails 社区的血泪经验，但是大部分也是适用于我们Node项目 (一些实践可能在新的docker部署下会有小调整）</p>
+<ul>
+<li><a href="http://12factor.net/zh_cn/codebase" target="_blank" rel="external">一份基准代码Codebase，多份部署deploy</a></li>
+<li><a href="http://12factor.net/zh_cn/dependencies" target="_blank" rel="external">显示声明和隔离依赖</a></li>
+<li><a href="http://12factor.net/zh_cn/config" target="_blank" rel="external">在配置放在环境中</a></li>
+<li><a href="http://12factor.net/zh_cn/backing-services" target="_blank" rel="external">把外部后端服务当做附加资源</a></li>
+<li><a href="http://12factor.net/zh_cn/build-release-run" target="_blank" rel="external">严格分离构建和运行环境</a></li>
+<li><a href="http://12factor.net/zh_cn/processes" target="_blank" rel="external">以一个或多个无状态进程运行应用</a></li>
+<li><a href="http://12factor.net/zh_cn/port-binding" target="_blank" rel="external">通过端口绑定(Port binding)来提供服务</a></li>
+<li><a href="http://12factor.net/zh_cn/concurrency" target="_blank" rel="external">通过进程模型进行扩展</a></li>
+<li><a href="http://12factor.net/zh_cn/disposability" target="_blank" rel="external">快速启动和优雅终止可最大化健壮性</a></li>
+<li><a href="http://12factor.net/zh_cn/dev-prod-parity" target="_blank" rel="external">尽可能的保持开发，预发布，线上环境相同</a></li>
+<li><a href="http://12factor.net/zh_cn/logs" target="_blank" rel="external">把日志当作事件流</a></li>
+<li><a href="http://12factor.net/zh_cn/admin-processes" target="_blank" rel="external">后台管理任务当作一次性进程运行</a></li>
+</ul>
+<h3 id="u59CB_u7EC8_u7528_npm_init__u5F00_u59CB_u65B0_u9879_u76EE"><a href="#u59CB_u7EC8_u7528_npm_init__u5F00_u59CB_u65B0_u9879_u76EE" class="headerlink" title="始终用 npm init 开始新项目"></a>始终用 npm init 开始新项目</h3><p>通过 npm init 来初始化你的node项目，通过promt 确定你的项目名称，开发者信息等（当然你可以通过 –yes 旗标来跳过）<br>Tip: 主要你应该总是显示指名你的node engines 版本（node -v），确保你的开发环境，测试环境和线上环境是用同一版本的 node.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	"<span class="attribute">engines</span>": <span class="value">&#123;</span><br><span class="line">		"<span class="attribute">node</span>": <span class="value"><span class="string">"4.2.1"</span></span><br><span class="line">	</span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="u6587_u4EF6_u540D_u59CB_u7EC8_u5C0F_u5199"><a href="#u6587_u4EF6_u540D_u59CB_u7EC8_u5C0F_u5199" class="headerlink" title="文件名始终小写"></a>文件名始终小写</h3><p>因为在 OSX 和 Windows 系统中，MyClass.js 和 myclass.js 没有任何区别，Linux 则会区分。所以为了你写的代码在不同操作系统是可移植的（在使用 require 来引入模块确保语句是一致明确的），所以始终保持小写 - my-class.js</p>
+<h3 id="u667A_u80FD_u7684-npmrc__u548C_u6B63_u786E_u7684_u7248_u672C_u7BA1_u7406_u505A_u6CD5"><a href="#u667A_u80FD_u7684-npmrc__u548C_u6B63_u786E_u7684_u7248_u672C_u7BA1_u7406_u505A_u6CD5" class="headerlink" title="智能的.npmrc 和正确的版本管理做法"></a>智能的.npmrc 和正确的版本管理做法</h3><p>默认上， npm 在安装新的依赖的modules，默认不会加入到package.json中。同时，modules的版本号不是严格锁死的（^尖角号来确保大版本保持一致）这样会造成一些问题，如在发布时才发现没有把依赖写入到package.json中，造成线上缺少必要的模块，线上部署发现用的不是相同的modules，导致莫名其妙的问题和大量的depricated warning警告。</p>
+<p>所以安装新依赖推荐这样的写法：<code>npm install foobar --save --save-exact</code><br>或者写入.npmrc 这样下次 npm install 就不会犯错啦</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ npm config <span class="built_in">set</span> save=<span class="literal">true</span></span><br><span class="line">$ npm config <span class="built_in">set</span> save-exact=<span class="literal">true</span></span><br><span class="line">$ cat ~/.npmrc</span><br></pre></td></tr></table></figure>
+<p>当然啦，如果如果希望更灵活的依赖控制，可以通过 <code>npm shrinkwrap</code> 命令生成 <code>npm-shrinkwrap.json</code> 加入到版本库中，这样在build环境构建也能保证版本统一。</p>
+<h3 id="u53CA_u65F6_u66F4_u65B0_u4F9D_u8D56"><a href="#u53CA_u65F6_u66F4_u65B0_u4F9D_u8D56" class="headerlink" title="及时更新依赖"></a>及时更新依赖</h3><p>上面的版本锁死让你面对依赖模块的时候更加从容，但是要记得保持定期更新依赖，从而获得修复bug和性能优化功能完善的更新。可以每周利用 <code>npm outdated</code> 或 <a href="https://www.npmjs.com/package/npm-check-updates" target="_blank" rel="external">ncu 工具包</a></p>
+<h3 id="u9009_u62E9_u5408_u9002_u7684_u6570_u636E_u5E93"><a href="#u9009_u62E9_u5408_u9002_u7684_u6570_u636E_u5E93" class="headerlink" title="选择合适的数据库"></a>选择合适的数据库</h3><p>大部分新的noder，在选择数据库，喜欢选择Mongodb。它的确很不错，但是 Mongodb 不是唯一的选择、<br>你应该根据你的应用场景来选择：</p>
+<ul>
+<li>你的数据是否结构化的</li>
+<li>你的数据操作是否要支持事务</li>
+<li>你数据是否需要持久化</li>
+</ul>
+<p>从而选择不同的数据库：如 PostgreSQL， Redis, LevelDB 等等</p>
+<h3 id="u76D1_u63A7_u4F60_u7684_u5E94_u7528_u7A0B_u5E8F"><a href="#u76D1_u63A7_u4F60_u7684_u5E94_u7528_u7A0B_u5E8F" class="headerlink" title="监控你的应用程序"></a>监控你的应用程序</h3><p>你要对你的线上应用的运行状况了如指掌（CPU，Memory，日志等），对一些突发情况需要及时获得通知。<br>很多开源项目和SaaS产品都提供完善强大的监控服务，如Zabbix, Collectd, ElasticSearch 和 Logstash. 甚至结合Cabot给微信公众号发消息提醒等等</p>
+<h3 id="u4F7F_u7528_u6784_u5EFA_u7CFB_u7EDF"><a href="#u4F7F_u7528_u6784_u5EFA_u7CFB_u7EDF" class="headerlink" title="使用构建系统"></a>使用构建系统</h3><p>现在的JavaScript的工具链有大量的选择： Grunt, Gulp, Webpack等。譬如在团队里，我们选择 Webpack 来辅助前端开发，gulp用来处理大量其他的自动化任务（你的shell脚本也可以通过gulp-shell集成进来）。当然我们也推荐使用 vanilla build （尤其你可以结合 npm lifecycle hooks 完成很多事）</p>
+<h3 id="NPM__u751F_u547D_u5468_u671F_u94A9_u5B50"><a href="#NPM__u751F_u547D_u5468_u671F_u94A9_u5B50" class="headerlink" title="NPM 生命周期钩子"></a>NPM 生命周期钩子</h3><p>提供了很好的钩子来使得一些task实现的很优雅，我们的<a href="https://github.com/gf-rd/gf-skeleton-node" target="_blank" rel="external">脚手架</a>大量使用了这样的技巧</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#34;postinstall&#34;: &#34;bower install &#38;&#38; grunt build&#34;,&#10;&#10;&#34;postinstall&#34;: &#34;if $BUILD_ASSETS; then npm run build-assets; fi&#34;,&#10;&#34;build-assets&#34;: &#34;bower install &#38;&#38; grunt build&#34;&#10;&#10;# &#22914;&#26524;&#33050;&#26412;&#21464;&#22797;&#26434;&#21487;&#20197;&#21333;&#29420;&#25991;&#20214;&#65306;&#10;&#34;postinstall&#34;: &#34;scripts/postinstall.sh&#8221; (sh &#33050;&#26412;&#20013;&#20250;&#33258;&#21160;&#21487;&#20197;&#35775;&#38382;&#21040; ./node_modules/.bin &#20013;&#30340;&#21629;&#20196;&#65292;&#22240;&#20026;&#35813;&#36335;&#24452;&#34987;&#21152;&#20837;&#21040; $PATH)</span><br></pre></td></tr></table></figure>
+<h3 id="u7BA1_u597D_u5783_u573E_u56DE_u6536"><a href="#u7BA1_u597D_u5783_u573E_u56DE_u6536" class="headerlink" title="管好垃圾回收"></a>管好垃圾回收</h3><p>v8默认使用 lazy 和 贪婪的 GC.  有时候等到1.5GB 自由才去回收未被使用的内存 (所以有时候内存涨不是因为泄露还是<a href="/">node’s usual lazy behavior</a>)</p>
+<p>所以你不想自己的node应用经常把服务器的内存占满（或者你不得不调整，因为你的机器可用内存没那么多），试着使用下面的命令/proc 文件来启动 node 服务（推荐写在 .pm2config 中，正如脚手架推荐的）</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web: node --optimize_for_size --max_old_space_size=920 --gc_interval=100 server.js</span><br></pre></td></tr></table></figure>
+<h3 id="u4F7F_u7528_u957F_u671F_u652F_u6301_u7684_Node-js__u7248_u672C"><a href="#u4F7F_u7528_u957F_u671F_u652F_u6301_u7684_Node-js__u7248_u672C" class="headerlink" title="使用长期支持的 Node.js 版本"></a>使用长期支持的 Node.js 版本</h3><p>如果你需要在不同项目中工作，并且不同项目用的node版本还不一样，可以使用 node version manager(<a href="https://github.com/creationix/nvm" target="_blank" rel="external">nvm</a>)</p>
+<h3 id="u4F7F_u7528_u8BED_u4E49_u5316_u7684_u7248_u672C_u53F7"><a href="#u4F7F_u7528_u8BED_u4E49_u5316_u7684_u7248_u672C_u53F7" class="headerlink" title="使用语义化的版本号"></a>使用语义化的版本号</h3><p>通过三段版本数来确保把兼容性声明好。 major.minor.patch 这样的格式，不同级别的升级对API更新的要求也是不一样的。可以通过<a href="https://github.com/semantic-release/semantic-release" target="_blank" rel="external">semantic-release</a> 来让版本升级更加自动化</p>
+<h3 id="u6301_u7EED_u5B66_u4E60_u548C_u8DDF_u4E0A_u6F6E_u6D41"><a href="#u6301_u7EED_u5B66_u4E60_u548C_u8DDF_u4E0A_u6F6E_u6D41" class="headerlink" title="持续学习和跟上潮流"></a>持续学习和跟上潮流</h3><p>JavaScript 和 Node.js 社区异常活跃，的确是件好事。每周都有新的工具新的理念的加入，让我们始终保持热情和技术的提升（警惕自己变成跟风狗，要取色和了解每个新东西背后的不变的本质），不要待在自己的蜜罐中，要动手做试验和学习。以下资料：</p>
+<ul>
+<li>Node.js Weekly Newsletter</li>
+<li>Microservice Weekly Newsletter</li>
+<li>Changelog Weekly - for Open-Source news</li>
+</ul>
+<h2 id="u53C2_u8003"><a href="#u53C2_u8003" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://blog.risingstack.com/how-to-become-a-better-node-js-developer-in-2016/" target="_blank" rel="external">How to Become a Better Node.js Developer</a></li>
+<li><a href="https://blog.heroku.com/archives/2015/11/10/node-habits-2016" target="_blank" rel="external">10 habits of a happy node hacker 2016</a></li>
+<li><a href="http://12factor.net/zh_cn" target="_blank" rel="external">Web 服务开发的十二条军规</a></li>
+</ul>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag">#JavaScript</a>
+          
+            <a href="/tags/Node-js/" rel="tag">#Node.js</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015-12/node-npm-scripts/" rel="next" title="【Node】16年，在看Node项目构建和npm scripts">
+                <i class="fa fa-chevron-left"></i> 【Node】16年，在看Node项目构建和npm scripts
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016-01/book-note-two-things-you-have-to-love/" rel="prev" title="【读书笔记】不能不去爱的两件事">
+                【读书笔记】不能不去爱的两件事 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016-01/node-新项目注意点-2016篇/"
+           data-title="【Node】16年，新 Node 项目注意点" data-url="http://sivagao.com/2016-01/node-新项目注意点-2016篇/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://sivagao.com/content/images/2015/09/avatar.jpg"
+               alt="Siva Gao" />
+          <p class="site-author-name" itemprop="name">Siva Gao</p>
+          <p class="site-description motion-element" itemprop="description">sivagao's home blog which archives something fun</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/gaohailang" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/ghlndsl" target="_blank">
+                  
+                    <i class="fa fa-twitter"></i> Twitter
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1siva" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i> Weibo
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.douban.com/people/sivaGao/" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> DouBan
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/1siva" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> ZhiHu
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#u6B63_u6587"><span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#u73B0_u5728_u5F00_u59CB_u4F7F_u7528_ES2015"><span class="nav-text">现在开始使用 ES2015</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5F02_u6B65_u51FD_u6570_u652F_u6301_u56DE_u8C03_u60EF_u4F8B_u548CPromise_u65B0_u5199_u6CD5"><span class="nav-text">异步函数支持回调惯例和Promise新写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5F02_u6B65_u6A21_u5F0F"><span class="nav-text">异步模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u9519_u8BEF_u5904_u7406"><span class="nav-text">错误处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u56DE_u8C03_u4E2D_u7684_u9519_u8BEF_u5904_u7406"><span class="nav-text">回调中的错误处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Promise_u4E2D_u7684_u9519_u8BEF_u5904_u7406"><span class="nav-text">Promise中的错误处理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u4F7F_u7528_u6807_u51C6_u7684_JavaScript__u4EE3_u7801_u98CE_u683C"><span class="nav-text">使用标准的 JavaScript 代码风格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web__u5E94_u7528_u5F00_u53D1_u7684_u5341_u4E8C_u6761_u519B_u89C4"><span class="nav-text">Web 应用开发的十二条军规</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u59CB_u7EC8_u7528_npm_init__u5F00_u59CB_u65B0_u9879_u76EE"><span class="nav-text">始终用 npm init 开始新项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u6587_u4EF6_u540D_u59CB_u7EC8_u5C0F_u5199"><span class="nav-text">文件名始终小写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u667A_u80FD_u7684-npmrc__u548C_u6B63_u786E_u7684_u7248_u672C_u7BA1_u7406_u505A_u6CD5"><span class="nav-text">智能的.npmrc 和正确的版本管理做法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u53CA_u65F6_u66F4_u65B0_u4F9D_u8D56"><span class="nav-text">及时更新依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u9009_u62E9_u5408_u9002_u7684_u6570_u636E_u5E93"><span class="nav-text">选择合适的数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u76D1_u63A7_u4F60_u7684_u5E94_u7528_u7A0B_u5E8F"><span class="nav-text">监控你的应用程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u4F7F_u7528_u6784_u5EFA_u7CFB_u7EDF"><span class="nav-text">使用构建系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NPM__u751F_u547D_u5468_u671F_u94A9_u5B50"><span class="nav-text">NPM 生命周期钩子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u7BA1_u597D_u5783_u573E_u56DE_u6536"><span class="nav-text">管好垃圾回收</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u4F7F_u7528_u957F_u671F_u652F_u6301_u7684_Node-js__u7248_u672C"><span class="nav-text">使用长期支持的 Node.js 版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u4F7F_u7528_u8BED_u4E49_u5316_u7684_u7248_u672C_u53F7"><span class="nav-text">使用语义化的版本号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u6301_u7EED_u5B66_u4E60_u548C_u8DDF_u4E0A_u6F6E_u6D41"><span class="nav-text">持续学习和跟上潮流</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u53C2_u8003"><span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siva Gao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.0"></script>
+
+
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"sivagao-blog"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("keYWlIGy4iO5M1C29zrEkLXI-gzGzoHsz", "Mtn7M5zjpMfEHLBnkOwcTuRK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+
+</body>
+</html>

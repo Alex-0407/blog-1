@@ -1,0 +1,955 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Nodejs, 前端, ES6" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Highway to the Wild" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.0" />
+
+
+
+
+
+
+<meta name="description" content="API 网关具体 API 网关功能介绍请见Node.js API gateway具体 API 网关和微服务架构关系见Node 接入层 - 微服务架构该 api gateway 基于 loopback， 结合kraken.js框架。
+特性
+开发时支持文件改动重启(remy/nodemon)
+防止node event-loop卡出(lloyd/node-toobusy)
+客户端支持，生成helper(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Node】Node 接入层 - 技术选型">
+<meta property="og:url" content="http://sivagao.com/2015-12/node-gateway-choices/index.html">
+<meta property="og:site_name" content="Highway to the Wild">
+<meta property="og:description" content="API 网关具体 API 网关功能介绍请见Node.js API gateway具体 API 网关和微服务架构关系见Node 接入层 - 微服务架构该 api gateway 基于 loopback， 结合kraken.js框架。
+特性
+开发时支持文件改动重启(remy/nodemon)
+防止node event-loop卡出(lloyd/node-toobusy)
+客户端支持，生成helper(">
+<meta property="og:image" content="https://cloud.githubusercontent.com/assets/697853/11617734/b8c758e4-9ccd-11e5-9e35-4b7706070d67.png">
+<meta property="og:image" content="https://cloud.githubusercontent.com/assets/697853/11617735/b8c7a75e-9ccd-11e5-831e-a2840b0b332e.png">
+<meta property="og:updated_time" content="2016-01-30T14:25:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Node】Node 接入层 - 技术选型">
+<meta name="twitter:description" content="API 网关具体 API 网关功能介绍请见Node.js API gateway具体 API 网关和微服务架构关系见Node 接入层 - 微服务架构该 api gateway 基于 loopback， 结合kraken.js框架。
+特性
+开发时支持文件改动重启(remy/nodemon)
+防止node event-loop卡出(lloyd/node-toobusy)
+客户端支持，生成helper(">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: '[object Object]',
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 【Node】Node 接入层 - 技术选型 | Highway to the Wild </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?968e1699fcafa46aee46e5335eb493d7";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Highway to the Wild</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">数字游民的养成~</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                【Node】Node 接入层 - 技术选型
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-12-07T07:56:29+08:00" content="2015-12-07">
+              2015-12-07
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015-12/node-gateway-choices/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015-12/node-gateway-choices/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015-12/node-gateway-choices/" class="leancloud_visitors" data-flag-title="【Node】Node 接入层 - 技术选型">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="API__u7F51_u5173"><a href="#API__u7F51_u5173" class="headerlink" title="API 网关"></a>API 网关</h2><p>具体 API 网关功能介绍请见<a href="https://github.com/gf-rd/blog/issues/3" target="_blank" rel="external">Node.js API gateway</a><br>具体 API 网关和微服务架构关系见<a href="https://github.com/gf-rd/blog/issues/10" target="_blank" rel="external">Node 接入层 - 微服务架构</a><br>该 api gateway 基于 loopback， 结合kraken.js框架。</p>
+<h3 id="u7279_u6027"><a href="#u7279_u6027" class="headerlink" title="特性"></a>特性</h3><ul>
+<li>开发时支持文件改动重启(remy/nodemon)</li>
+<li>防止node event-loop卡出(lloyd/node-toobusy)</li>
+<li>客户端支持，生成helper(如Angular resources service)</li>
+<li>支持node cluster（pm2）</li>
+<li>支持webapp的profiling（CPU，memory等）（pm2 metrics 导入statsD）</li>
+<li>支持environment-specific configfile (indexzero/nconf，loopback内置)</li>
+<li>工业强度的安全头（helmetjs/helmet，krakenjs/lusca）</li>
+<li>api 文档和playground 支持（swagger-api/swagger-ui）</li>
+<li>routes &amp; controllers 的代码结构约束（krakenjs/express-enrouten） </li>
+<li>多个data sources &amp; connector 支持（pg, mysql, mongodb等）</li>
+<li>http req query/body 检查和sanitizer（ctavan/express-validator）</li>
+<li>接口支持精细化ACL控制（loopback内置）</li>
+<li>configured middleware setup（loopback内置）</li>
+<li>请求频率控制Rate limit（visionmedia/node-ratelimiter，移入nginx中）</li>
+<li>请求信息log（morgan，移入nginx中）</li>
+<li>认证授权系统（oauth, cookie, jwt支持)</li>
+</ul>
+<h3 id="u5916_u56F4_u7CFB_u7EDF"><a href="#u5916_u56F4_u7CFB_u7EDF" class="headerlink" title="外围系统"></a>外围系统</h3><p>外围系统通过 docker 镜像和容器提供服务. 具体实例和把玩可见下方的 aws 地址</p>
+<p>redis - data &amp; session cache<br>mongo - self-hosetd nosql db</p>
+<p>pm2(strongloop-pm) - process manager<br>varnish - http cache server<br>nginx - reversed proxy and load balance(need haproxy?)</p>
+<p>metrics 平台 - statsD + graphite(carbon + whisper + grafana)</p>
+<ul>
+<li>StatsD：负责收集并聚合测量值</li>
+<li>carbon：Twisted(Python)daemon，接受进入的数据</li>
+<li>whisper：存储时间序列数据的数据库</li>
+<li>grafana：提供丰富现代化的图表编辑和Dashboard（替换的graphite Django）</li>
+</ul>
+<p>alerts 平台 (seyren 基于graphite）<br>logs 平台 - ELK （elasticsearch，logstash，kibana）</p>
+<ul>
+<li>logstash: 负责日志的收集处理和存储</li>
+<li>elasticsearch: 负责日志的检索和分析</li>
+<li>kibana: 负责日志的可视化</li>
+</ul>
+<h2 id="u53C2_u8003"><a href="#u53C2_u8003" class="headerlink" title="参考"></a>参考</h2><h3 id="u6846_u67B6_u9009_u578B"><a href="#u6846_u67B6_u9009_u578B" class="headerlink" title="框架选型"></a>框架选型</h3><p>（为什么不选 restify/hapi/koa/der，选择express，基于express之上的选择（为什么不sail.js, keystone ）<br><a href="http://nodeframework.com/#rest-api" target="_blank" rel="external">http://nodeframework.com/#rest-api</a><br><a href="http://www.capitalone.io/blog/contrasting-enterprise-nodejs-frameworks/" target="_blank" rel="external">http://www.capitalone.io/blog/contrasting-enterprise-nodejs-frameworks/</a><br><a href="http://www.3rank.com/node-js-frameworks/" target="_blank" rel="external">http://www.3rank.com/node-js-frameworks/</a><br><a href="https://github.com/krakenjs/kraken-js" target="_blank" rel="external">https://github.com/krakenjs/kraken-js</a><br><a href="https://github.com/strongloop/loopback" target="_blank" rel="external">https://github.com/strongloop/loopback</a></p>
+<h3 id="u5916_u56F4_u9009_u578B"><a href="#u5916_u56F4_u9009_u578B" class="headerlink" title="外围选型"></a>外围选型</h3><p><a href="http://blog.takipi.com/graphite-vs-grafana-build-the-best-monitoring-architecture-for-your-application/" target="_blank" rel="external">http://blog.takipi.com/graphite-vs-grafana-build-the-best-monitoring-architecture-for-your-application/</a><br><a href="https://github.com/scobal/seyren" target="_blank" rel="external">https://github.com/scobal/seyren</a><br><a href="https://keymetrics.io/" target="_blank" rel="external">https://keymetrics.io/</a><br><a href="http://rosskukulinski.github.io/talk-statsd/#/26" target="_blank" rel="external">http://rosskukulinski.github.io/talk-statsd/#/26</a><br><a href="http://techblog.holidaycheck.com/profiling-mongodb-with-logstash-and-kibana/" target="_blank" rel="external">http://techblog.holidaycheck.com/profiling-mongodb-with-logstash-and-kibana/</a><br><a href="http://elk-docker.readthedocs.org/#installation" target="_blank" rel="external">http://elk-docker.readthedocs.org/#installation</a></p>
+<h3 id="u8FD0_u7EF4_u6027_u80FD"><a href="#u8FD0_u7EF4_u6027_u80FD" class="headerlink" title="运维性能"></a>运维性能</h3><p>node webapp 的 运维<br><a href="https://strongloop.com/strongblog/category/node-devops/" target="_blank" rel="external">https://strongloop.com/strongblog/category/node-devops/</a><br>node 性能优化<br><a href="https://strongloop.com/strongblog/category/performance-tip/" target="_blank" rel="external">https://strongloop.com/strongblog/category/performance-tip/</a></p>
+<p><a href="https://blog.risingstack.com/node-js-security-checklist/" target="_blank" rel="external">https://blog.risingstack.com/node-js-security-checklist/</a><br><a href="https://blog.risingstack.com/node-js-production-checklist/" target="_blank" rel="external">https://blog.risingstack.com/node-js-production-checklist/</a><br><a href="http://blog.risingstack.com/operating-node-in-production/" target="_blank" rel="external">http://blog.risingstack.com/operating-node-in-production/</a><br><a href="https://blog.risingstack.com/nodejs-production-environment-for-startups/" target="_blank" rel="external">https://blog.risingstack.com/nodejs-production-environment-for-startups/</a></p>
+<h3 id="web__u5F00_u53D1"><a href="#web__u5F00_u53D1" class="headerlink" title="web 开发"></a>web 开发</h3><p><a href="https://blog.risingstack.com/swagger-nodejs/" target="_blank" rel="external">https://blog.risingstack.com/swagger-nodejs/</a><br><a href="http://blog.risingstack.com/web-authentication-methods-explained/" target="_blank" rel="external">http://blog.risingstack.com/web-authentication-methods-explained/</a><br><a href="https://github.com/auth0/node-jsonwebtoken" target="_blank" rel="external">https://github.com/auth0/node-jsonwebtoken</a><br><a href="http://www.nearform.com/nodecrunch/release-the-kracken-how-paypal-is-being-revolutionized-by-node-js-and-lean-ux/" target="_blank" rel="external">http://www.nearform.com/nodecrunch/release-the-kracken-how-paypal-is-being-revolutionized-by-node-js-and-lean-ux/</a></p>
+<h2 id="loopback_Overview"><a href="#loopback_Overview" class="headerlink" title="loopback Overview"></a>loopback Overview</h2><h3 id="u6846_u56FE"><a href="#u6846_u56FE" class="headerlink" title="框图"></a>框图</h3><p><img src="https://cloud.githubusercontent.com/assets/697853/11617734/b8c758e4-9ccd-11e5-9e35-4b7706070d67.png" alt="qq20151207-0"><br><img src="https://cloud.githubusercontent.com/assets/697853/11617735/b8c7a75e-9ccd-11e5-831e-a2840b0b332e.png" alt="qq20151207-1"></p>
+<h2 id="u5176_u4ED6_u8BBE_u8BA1_u53C2_u8003"><a href="#u5176_u4ED6_u8BBE_u8BA1_u53C2_u8003" class="headerlink" title="其他设计参考"></a>其他设计参考</h2><h3 id="Nginx_-__u5B9E_u73B0_u4E00_u4E2AAPI_Gateway_u7684_u6280_u672F_u8003_u91CF"><a href="#Nginx_-__u5B9E_u73B0_u4E00_u4E2AAPI_Gateway_u7684_u6280_u672F_u8003_u91CF" class="headerlink" title="Nginx - 实现一个API Gateway的技术考量"></a>Nginx - 实现一个API Gateway的技术考量</h3><h4 id="u6027_u80FD_u548C_u53EF_u6269_u5C55_u6027_3A"><a href="#u6027_u80FD_u548C_u53EF_u6269_u5C55_u6027_3A" class="headerlink" title="性能和可扩展性:"></a>性能和可扩展性:</h4><p>一个可选的方案是NGINX Plus。NGINX Plus提供一个成熟的、可扩展的、高性能web服务器和反向代理，它们均容易部署、配置和二次开发。NGINX Plus可以管理授权、权限控制、负载均衡、缓存并提供应用健康检查和监控。</p>
+<h4 id="u91C7_u7528_u53CD_u5E94_u6027_u7F16_u7A0B_u6A21_u578B_uFF1A"><a href="#u91C7_u7528_u53CD_u5E94_u6027_u7F16_u7A0B_u6A21_u578B_uFF1A" class="headerlink" title="采用反应性编程模型："></a>采用反应性编程模型：</h4><p>为了最小化响应时间，API Gateway应该并发的处理相互独立的请求。但是，有时候请求之间是有依赖的（如为了获得客户的产品愿望清单，需要先获取该用户的资料，然后返回清单上产品的信息）<br>利用传统回调方式限制 callback 地狱.<br>类似的反应抽象实现有Scala的Future，Java8的CompletableFuture和JavaScript的Promise。<br>基于微软.Net平台的有Reactive Extensions(Rx) 和RxJS。</p>
+<h4 id="u670D_u52A1_u8C03_u7528_uFF1A"><a href="#u670D_u52A1_u8C03_u7528_uFF1A" class="headerlink" title="服务调用："></a>服务调用：</h4><p>JSM，AMQP<br>HTTP, Thrift<br>同步，异步机制（基于消息）实现方式是多种的。</p>
+<h4 id="u670D_u52A1_u53D1_u73B0_uFF1A"><a href="#u670D_u52A1_u53D1_u73B0_uFF1A" class="headerlink" title="服务发现："></a>服务发现：</h4><p>如果采用客户端发现服务，API Gateway必须要去查询服务注册处，也就是微服务实例地址的数据库。</p>
+<h4 id="u5904_u7406_u90E8_u5206_u5931_u8D25_uFF1A"><a href="#u5904_u7406_u90E8_u5206_u5931_u8D25_uFF1A" class="headerlink" title="处理部分失败："></a>处理部分失败：</h4><p>Hystrix 对于实现RPC，记录那些超过预设定的极限值的调用。采用 circuit breaker 模式， 使得客户端从无响应服务的无尽等待中停止，对于一个错误率超过预设值的，中断服务，在一段时间内所有请求立即失效（防止雪崩），提供fallback（如读取缓冲或返回默认值等） - 如果你在用JVM，就应该考虑使用Hystrix。如果你采用的非JVM环境，那么应该考虑采用类似功能的库</p>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag">#JavaScript</a>
+          
+            <a href="/tags/Node-js/" rel="tag">#Node.js</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015-11/node-mircoservices/" rel="next" title="【Node】Node 接入层 - 微服务架构">
+                <i class="fa fa-chevron-left"></i> 【Node】Node 接入层 - 微服务架构
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015-12/book-emotion-quanity/" rel="prev" title="【读书笔记】情商">
+                【读书笔记】情商 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015-12/node-gateway-choices/"
+           data-title="【Node】Node 接入层 - 技术选型" data-url="http://sivagao.com/2015-12/node-gateway-choices/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://sivagao.com/content/images/2015/09/avatar.jpg"
+               alt="Siva Gao" />
+          <p class="site-author-name" itemprop="name">Siva Gao</p>
+          <p class="site-description motion-element" itemprop="description">sivagao's home blog which archives something fun</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/gaohailang" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/ghlndsl" target="_blank">
+                  
+                    <i class="fa fa-twitter"></i> Twitter
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1siva" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i> Weibo
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.douban.com/people/sivaGao/" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> DouBan
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/1siva" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> ZhiHu
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#API__u7F51_u5173"><span class="nav-text">API 网关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#u7279_u6027"><span class="nav-text">特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5916_u56F4_u7CFB_u7EDF"><span class="nav-text">外围系统</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u53C2_u8003"><span class="nav-text">参考</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#u6846_u67B6_u9009_u578B"><span class="nav-text">框架选型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5916_u56F4_u9009_u578B"><span class="nav-text">外围选型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u8FD0_u7EF4_u6027_u80FD"><span class="nav-text">运维性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#web__u5F00_u53D1"><span class="nav-text">web 开发</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#loopback_Overview"><span class="nav-text">loopback Overview</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#u6846_u56FE"><span class="nav-text">框图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u5176_u4ED6_u8BBE_u8BA1_u53C2_u8003"><span class="nav-text">其他设计参考</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Nginx_-__u5B9E_u73B0_u4E00_u4E2AAPI_Gateway_u7684_u6280_u672F_u8003_u91CF"><span class="nav-text">Nginx - 实现一个API Gateway的技术考量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u6027_u80FD_u548C_u53EF_u6269_u5C55_u6027_3A"><span class="nav-text">性能和可扩展性:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u91C7_u7528_u53CD_u5E94_u6027_u7F16_u7A0B_u6A21_u578B_uFF1A"><span class="nav-text">采用反应性编程模型：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u670D_u52A1_u8C03_u7528_uFF1A"><span class="nav-text">服务调用：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u670D_u52A1_u53D1_u73B0_uFF1A"><span class="nav-text">服务发现：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u5904_u7406_u90E8_u5206_u5931_u8D25_uFF1A"><span class="nav-text">处理部分失败：</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siva Gao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.0"></script>
+
+
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"sivagao-blog"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("keYWlIGy4iO5M1C29zrEkLXI-gzGzoHsz", "Mtn7M5zjpMfEHLBnkOwcTuRK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+
+</body>
+</html>

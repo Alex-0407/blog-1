@@ -1,0 +1,964 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Nodejs, 前端, ES6" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Highway to the Wild" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.0" />
+
+
+
+
+
+
+<meta name="description" content="http://book.douban.com/subject/20386245/
+这本书是情商之父的新研究成果，是『情商：为什么情商比智商更重要』的升华和延生，内容强调了团队和领导情景下的情商讨论。
+我们如何做出决策， 如何发挥你大脑的和创造力， 如何调整最佳工作状态，如何建立良好的社交关系，如何有效的理解他人，如何提高网络时代的社交商，你适合什么样的领导风格。
+内容包括：
+
+学术界关注的：有别于">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【读书笔记】情商">
+<meta property="og:url" content="http://sivagao.com/2015-12/book-emotion-quanity/index.html">
+<meta property="og:site_name" content="Highway to the Wild">
+<meta property="og:description" content="http://book.douban.com/subject/20386245/
+这本书是情商之父的新研究成果，是『情商：为什么情商比智商更重要』的升华和延生，内容强调了团队和领导情景下的情商讨论。
+我们如何做出决策， 如何发挥你大脑的和创造力， 如何调整最佳工作状态，如何建立良好的社交关系，如何有效的理解他人，如何提高网络时代的社交商，你适合什么样的领导风格。
+内容包括：
+
+学术界关注的：有别于">
+<meta property="og:updated_time" content="2016-01-30T14:32:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【读书笔记】情商">
+<meta name="twitter:description" content="http://book.douban.com/subject/20386245/
+这本书是情商之父的新研究成果，是『情商：为什么情商比智商更重要』的升华和延生，内容强调了团队和领导情景下的情商讨论。
+我们如何做出决策， 如何发挥你大脑的和创造力， 如何调整最佳工作状态，如何建立良好的社交关系，如何有效的理解他人，如何提高网络时代的社交商，你适合什么样的领导风格。
+内容包括：
+
+学术界关注的：有别于">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: '[object Object]',
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 【读书笔记】情商 | Highway to the Wild </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?968e1699fcafa46aee46e5335eb493d7";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Highway to the Wild</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">数字游民的养成~</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                【读书笔记】情商
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-12-23T07:56:29+08:00" content="2015-12-23">
+              2015-12-23
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015-12/book-emotion-quanity/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015-12/book-emotion-quanity/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015-12/book-emotion-quanity/" class="leancloud_visitors" data-flag-title="【读书笔记】情商">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="http://book.douban.com/subject/20386245/" target="_blank" rel="external">http://book.douban.com/subject/20386245/</a></p>
+<p>这本书是情商之父的新研究成果，是『情商：为什么情商比智商更重要』的升华和延生，内容强调了团队和领导情景下的情商讨论。</p>
+<p>我们如何做出决策， 如何发挥你大脑的和创造力， 如何调整最佳工作状态，如何建立良好的社交关系，如何有效的理解他人，如何提高网络时代的社交商，你适合什么样的领导风格。</p>
+<p>内容包括：</p>
+<ul>
+<li>学术界关注的：有别于智商的情商真的存在吗</li>
+<li>大脑的伦理探测器</li>
+<li>创造力的神经机制</li>
+<li>驱动力，持久力和动机的神经回路</li>
+<li>保持及增强最佳的大脑状态</li>
+<li>社交脑：和谐，共鸣与人际互动</li>
+<li>大脑2.0版：网络时代的大脑</li>
+<li>同理心类型与主要的性别差异</li>
+<li>情绪阴暗面：工作中的反社会个人</li>
+<li>训练和提高情商的神经课程</li>
+</ul>
+<h2 id="u5185_u5BB9_u5927_u7EB2"><a href="#u5185_u5BB9_u5927_u7EB2" class="headerlink" title="内容大纲"></a>内容大纲</h2><h3 id="u7B2C_u4E00_u90E8_u5206_uFF1A_u60C5_u5546_u7684_u529B_u91CF"><a href="#u7B2C_u4E00_u90E8_u5206_uFF1A_u60C5_u5546_u7684_u529B_u91CF" class="headerlink" title="第一部分：情商的力量"></a>第一部分：情商的力量</h3><h4 id="u60CA_u4EBA_u7684_u53D1_u5C55"><a href="#u60CA_u4EBA_u7684_u53D1_u5C55" class="headerlink" title="惊人的发展"></a>惊人的发展</h4><p>每种情商模式可以划分伪自我意识， 自我管理，社会意识和人际关系管理四大类型。 </p>
+<p>知识经济时代，群商（团队协调合作的有效性）来辅助提升团队的效能，同时心理状态（压力，疲惫，涌流）的研究，要求好的领导者需要带领团队进入涌流。同时，情商决定了我们自我管理人际关系等基础要素的潜能， 而情绪竞争力反应的是我们在情商转化伪职业能力的潜能（如提高客户服务， 团队合作的情绪能力等）</p>
+<h4 id="u7528_u5FC3_u7BA1_u7406"><a href="#u7528_u5FC3_u7BA1_u7406" class="headerlink" title="用心管理"></a>用心管理</h4><p>意识到挫折或失败是由客观条件造成的， 我们可以改变这些条件，从而把工作做得更好。<br>领导力不是支持和控制，而是说服人们向共同目标努力的艺术。同时确保团队成员见的协调一致。 正如夫妇的情绪健康取决于他们表达不满的技巧， 公司员工的工作效率和满意度和产出取决于上司向他们指出问题的方式。受攻击的员工常见的回应： 为自己辩护，寻找借口，逃避责任或消极作对等（情绪是紧张，愤怒和抵触的） - 批评是激励员工最糟糕的方式<br>最主要是传递有效信息（反馈）<br>具体，选择有意义的事件，提供解决思路，当面表达，保持敏感。提出的改进工作信息而不是攻击，警惕自我辩护而不是承担责任的冲动，让自己冷静下来再回应。坐下来解决问题而不是敌对立场。</p>
+<h4 id="u9886_u5BFC_u662F_u5982_u4F55_u70BC_u6210_u7684"><a href="#u9886_u5BFC_u662F_u5982_u4F55_u70BC_u6210_u7684" class="headerlink" title="领导是如何炼成的"></a>领导是如何炼成的</h4><p>讲解了自我意识， 自我管理， 同理心（社会意识）和社交技巧<br>技术业务能力，认知分析能力，情商竞争力。职位越高， 情商对其效能的影响因素就越大（跟更多人打交道）<br>自我意识是指对自己的情绪，优劣势和需求动机有着深切理解。对自我价值和目标认识清晰从而行动果断。 需要坦率以及准备的自我评估渴望建设性的批评建议。</p>
+<p>自我管理调节控制受坏情绪和避免冲动，不慌不忙从容应对（情绪控制强的人通常被认为是冷冰冰的，深思熟虑后的回应被看做是缺乏热情，而不是脾气暴躁领导的风范</p>
+<p>同理心，善解人意</p>
+<p>社交技巧，带有目的的友好表示，说服人们按照你希望的方式行动。交际面很广，善于发现和别人相似之处，意识到团队群策群力的重要性</p>
+<h4 id="u4F60_u9002_u5408_u4EC0_u4E48_u6837_u7684_u9886_u5BFC_u98CE_u683C"><a href="#u4F60_u9002_u5408_u4EC0_u4E48_u6837_u7684_u9886_u5BFC_u98CE_u683C" class="headerlink" title="你适合什么样的领导风格"></a>你适合什么样的领导风格</h4><p>不同类型的领导：权威型，教练型，亲民型，领头型，高压型等<br>鼓舞士气，制定战略，分配任务和营造文化。 『领导者突出任务是获得结果』</p>
+<p>权威，发动员工向目标共同努力（分解为个体的目标任务，围绕组织愿景制定工作标准和奖励标准 - 但是如果他和一群比他有经验的专家共事会表现的盛气凌人）</p>
+<p>亲和，创造感情联系和和谐关系（注重个体和情绪甚于目标和任务，培养员工归属感）</p>
+<p>民主，通过参与建立共识（在领导者本身不清楚前进方向，需要听从有能力员工的意见，让员工对工作任务和标准有发言权和）<br>领头，期待员工出色表现和自我管理</p>
+<p>教练，训练来成长提升（帮助员工人情独特优势和关键缺点，鼓励他们追求个人和职业梦想，明确在项目角色和义务，擅长授权和布置有挑战性的任务。教练型越来越重要帮助组织变成学习型，它靠润物无声而不是摇旗呐喊。PS：个体发展和公司业务结合权衡）</p>
+<p>领头，他设定特别高的业绩标准，并且以身作则，亲自示范，要求别人也一样，表现不佳的员工逃不过他的眼睛 - 有时候这样会给团队压力要求过高使得员工士气低落。 适合带领技术能力出色，积极主动的专业人士，比如研发团队和律师团队</p>
+<p>高压，要求毫无疑问的顺从（只适合公司发展的危急关头-如改组期间和面临收购和面临业绩压力等</p>
+<p>事实证明，管理者的领导风格越多样越好。</p>
+<h4 id="u7FA4_u5546"><a href="#u7FA4_u5546" class="headerlink" title="群商"></a>群商</h4><p>团队成功依赖于内部成员的和谐程度。对于一个和谐团队，拥有一位天分极高的成员可以提高团队的整体表现。明星员工和普通员工在能力上没有显著差异，关键差异在于为了完成任务运用的内在策略和人际策略 - 与一群关键人物保持融洽的关系。非正式网具有高度适应性，可以交流一些敏感信息（如想换工作，对经理的吐槽等），有三种形式：一是沟通网（相互交谈的圈子），二是专业网（由提供建议的人组成），三是信任网（交换秘密，疑问和弱点）</p>
+<p>当然明星员工还包括协调团队在意见一致时起到领导作用，他人角度看问题，说服他人等（社交技能）<br>当然他们也积极主动自我激励承担本职之外的责任。善于自我管理，在时间和工作承诺中取得平衡（自我控制）</p>
+<h3 id="u5927_u8111_u548C_u60C5_u5546"><a href="#u5927_u8111_u548C_u60C5_u5546" class="headerlink" title="大脑和情商"></a>大脑和情商</h3><h4 id="u60C5_u5546_u4E3A_u4EC0_u4E48_u5982_u6B64_u72EC_u7279"><a href="#u60C5_u5546_u4E3A_u4EC0_u4E48_u5982_u6B64_u72EC_u7279" class="headerlink" title="情商为什么如此独特"></a>情商为什么如此独特</h4><h4 id="u81EA_u6211_u610F_u8BC6_uFF1A_u6211_u4EEC_u662F_u5982_u4F55_u505A_u51FA_u51B3_u5B9A_u7684"><a href="#u81EA_u6211_u610F_u8BC6_uFF1A_u6211_u4EEC_u662F_u5982_u4F55_u505A_u51FA_u51B3_u5B9A_u7684" class="headerlink" title="自我意识：我们是如何做出决定的"></a>自我意识：我们是如何做出决定的</h4><h4 id="u6700_u4F73_u5FC3_u7406_u72B6_u6001"><a href="#u6700_u4F73_u5FC3_u7406_u72B6_u6001" class="headerlink" title="最佳心理状态"></a>最佳心理状态</h4><p>消极情绪让我们和周围的人感到不快，更容易在遇到困难时就迅速放弃<br>积极乐观让我们更富有创造性，但也会容易仓促决定没有对细节足够的关注。<br>负面情绪并非一无是处，它让我们严肃，保持质疑精神，深入探究做出自己判断。 愤怒也会让人集中精力排除万难保持斗志等。它的坏处是：<br>1 让周围的人感到不快，影响团队情绪和效率<br>2 使自己有消极偏见，遇到困难就放弃等</p>
+<h4 id="u6253_u5F00_u521B_u610F_u4E4B_u95E8"><a href="#u6253_u5F00_u521B_u610F_u4E4B_u95E8" class="headerlink" title="打开创意之门"></a>打开创意之门</h4><p>创造力四阶段经典模型（辨认和界定问题， 全神贯注和深入思考，放手不管和保持放松「譬如在洗热水澡时，散步或度假时」，实施）<br>但实际生活中，创业工作者与创造力之间的复杂关系远远超过模型的描述<br>在放松阶段，我们进入开放包容，白日做梦和随波逐流的状态，此时我们对新想法的感受能力更强（在紧张思索后的放松情绪之间）</p>
+<h4 id="u81EA_u6211_u63A7_u5236_u548C_u8C03_u8282"><a href="#u81EA_u6211_u63A7_u5236_u548C_u8C03_u8282" class="headerlink" title="自我控制和调节"></a>自我控制和调节</h4><p>所谓的杏仁核劫持是的无法集中精力完成工作，只会想着困扰自己的事，无法记忆其他事情。<br>自我管理的基础：觉察到内心的状态，并对其管理。学会自我管理无论在哪个领域都会拥有出色的表现。<br>前额皮层是自我调节的主要神经区域，而杏仁核是苦恼，愤怒，冲动和恐惧等情绪的触发器（是大脑探测威胁的雷达）。一般前额皮质和杏仁核进行交互和平衡，成为自我管理的基础。<br>容易触发杏仁核：<br>卑躬屈膝，毫无尊严<br>收到不公正对待<br>不被欣赏<br>意见没人理会<br>完成任务的时间太苛刻</p>
+<p>如何把杏仁核劫持反应降到最低：<br>1 提高注意力，监控自身心理和大脑状态意识到『我真是反应过度了』<br>2 恢复 - 认知方法，说服自己讲道理（质疑自己失控的想法：这家伙不是一直这么差劲，有时候他也很体贴<br>3 恢复 - 运用同理心，想象自己处于对方的位置<br>4 生物疗法</p>
+<p>PS：症状发展伪焦虑症，抑郁症等</p>
+<h4 id="u51CF_u538B_-__u6B63_u5FF5"><a href="#u51CF_u538B_-__u6B63_u5FF5" class="headerlink" title="减压 - 正念"></a>减压 - 正念</h4><p>拥有良好的迷走神经张力，不加能够帮我们从压力中复原，还有助于睡眠，防止生活中的慢性压力对健康造成不良影响</p>
+<p>1 脱离忙碌纷乱的常规生活，抽出固定时间用于休息和复原（如沐浴遛狗等），停止疲于奔命<br>2 正念，此时此刻对自身体验保持不偏不倚的态度（不批评不做反应等） - 可以增强前额皮质关键部位的支配地位<br>3 冥想，爱的练习，迷走神经张力，身体应对挑战并迅速复原的动员能力*发火前慢慢从1数到10等</p>
+<h4 id="u60F3_u8981_u6210_u529F_uFF0C_u9700_u8981_u826F_u597D_u7684_u52A8_u673A"><a href="#u60F3_u8981_u6210_u529F_uFF0C_u9700_u8981_u826F_u597D_u7684_u52A8_u673A" class="headerlink" title="想要成功，需要良好的动机"></a>想要成功，需要良好的动机</h4><p>动机正是乐趣所在，实现目标的过程通常是困难重重的。需要动机驱使我们勇往直前，渡过难关</p>
+<ul>
+<li>权利需要，对他人施加影响的欲望（两种，自我伪中心的自私型权利，如纳粹分子。另外是社会福利型权利）</li>
+<li>亲和需要，与他人相处获得愉悦感的需要</li>
+<li>成就需要（实现有意义的目标）警惕它的负面影响，有些人变成工作狂只想着工作目标，完美主义者看不到已经做得很好的地方，不会放下工作享受喜欢的东西，或付出健康代价染上慢性疾病</li>
+</ul>
+<h4 id="u8C03_u6574_u5230_u6700_u4F73_u5DE5_u4F5C_u72B6_u6001"><a href="#u8C03_u6574_u5230_u6700_u4F73_u5DE5_u4F5C_u72B6_u6001" class="headerlink" title="调整到最佳工作状态"></a>调整到最佳工作状态</h4><p>良性的压力，让人全情投入，备受鼓励</p>
+<p>涌流，日常练习提高注意力并且保持生理放松.<br>认知角度训练专注力（把注意力集中在一件事，一旦开始游离到其他上，你意识到它并且把注意力重新集中在原来事上）这样肌肉得到锻炼</p>
+<h4 id="u5EFA_u7ACB_u826F_u597D_u7684_u793E_u4EA4_u5173_u7CFB"><a href="#u5EFA_u7ACB_u826F_u597D_u7684_u793E_u4EA4_u5173_u7CFB" class="headerlink" title="建立良好的社交关系"></a>建立良好的社交关系</h4><p>参与并且塑造对方的感受， 管理他人大脑状态</p>
+<h4 id="u7F51_u7EDC_u65F6_u4EE3_u7684_u793E_u4EA4_u5546"><a href="#u7F51_u7EDC_u65F6_u4EE3_u7684_u793E_u4EA4_u5546" class="headerlink" title="网络时代的社交商"></a>网络时代的社交商</h4><h4 id="u540C_u7406_u5FC3_uFF1A_u6709_u6548_u5730_u7406_u89E3_u4ED6_u4EBA"><a href="#u540C_u7406_u5FC3_uFF1A_u6709_u6548_u5730_u7406_u89E3_u4ED6_u4EBA" class="headerlink" title="同理心：有效地理解他人"></a>同理心：有效地理解他人</h4><p>社会意识的核心技能：同理心。不用别人诉说，我们就能体会到对方的想法和感受，我们通过语调，面部表情，姿势和其他大量非语言渠道，持续向他人发送感受信号，但不同人理解洞察程度大相径庭。</p>
+<p>认知同理心：我了解你看待事物的态度可以站在你的立场<br>情绪同理心：我与你感同身受，是人际关系和谐擦出火花的基础<br>同理心关怀：我如果感受到你需要帮助自然会提供版主</p>
+<p>锻炼，don’t lie to me, 非语言线索往往会泄露人们的真实情感（观看没有声音的录像或影片，猜测演员所表达的情绪并且验证）</p>
+<h4 id="u60C5_u5546_u7537_u5973_u6709_u522B"><a href="#u60C5_u5546_u7537_u5973_u6709_u522B" class="headerlink" title="情商男女有别"></a>情商男女有别</h4><p>女性在同理心更敏感而男性很容易进入解决问题模式（系统思维能力）</p>
+<h4 id="u9634_u6697_u60C5_u7EEA_uFF1A_u4ED6_u4EEC_u7F3A_u5C11_u60C5_u7EEA_u540C_u7406_u5FC3"><a href="#u9634_u6697_u60C5_u7EEA_uFF1A_u4ED6_u4EEC_u7F3A_u5C11_u60C5_u7EEA_u540C_u7406_u5FC3" class="headerlink" title="阴暗情绪：他们缺少情绪同理心"></a>阴暗情绪：他们缺少情绪同理心</h4><h4 id="u8BAD_u7EC3_u60C5_u5546_uFF1A_u4F60_u5E0C_u671B_u5927_u8111_u9ED8_u8BA4_u4EC0_u4E48_u9009_u9879"><a href="#u8BAD_u7EC3_u60C5_u5546_uFF1A_u4F60_u5E0C_u671B_u5927_u8111_u9ED8_u8BA4_u4EC0_u4E48_u9009_u9879" class="headerlink" title="训练情商：你希望大脑默认什么选项"></a>训练情商：你希望大脑默认什么选项</h4><p>内心演练，它所激活的神经回路和真正从事该项活动激活的是一样的<br>行为习惯练习越多，神经联结越强，重复多次后成为了默认选项（也取决于被替代的旧习惯的顽固程度）</p>
+<h4 id="u793E_u4EA4_u4E8E_u60C5_u611F_u5B66_u4E60"><a href="#u793E_u4EA4_u4E8E_u60C5_u611F_u5B66_u4E60" class="headerlink" title="社交于情感学习"></a>社交于情感学习</h4>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag">#JavaScript</a>
+          
+            <a href="/tags/Node-js/" rel="tag">#Node.js</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015-12/node-gateway-choices/" rel="next" title="【Node】Node 接入层 - 技术选型">
+                <i class="fa fa-chevron-left"></i> 【Node】Node 接入层 - 技术选型
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015-12/node-npm-scripts/" rel="prev" title="【Node】16年，在看Node项目构建和npm scripts">
+                【Node】16年，在看Node项目构建和npm scripts <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015-12/book-emotion-quanity/"
+           data-title="【读书笔记】情商" data-url="http://sivagao.com/2015-12/book-emotion-quanity/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://sivagao.com/content/images/2015/09/avatar.jpg"
+               alt="Siva Gao" />
+          <p class="site-author-name" itemprop="name">Siva Gao</p>
+          <p class="site-description motion-element" itemprop="description">sivagao's home blog which archives something fun</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/gaohailang" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/ghlndsl" target="_blank">
+                  
+                    <i class="fa fa-twitter"></i> Twitter
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1siva" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i> Weibo
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.douban.com/people/sivaGao/" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> DouBan
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/1siva" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> ZhiHu
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#u5185_u5BB9_u5927_u7EB2"><span class="nav-text">内容大纲</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#u7B2C_u4E00_u90E8_u5206_uFF1A_u60C5_u5546_u7684_u529B_u91CF"><span class="nav-text">第一部分：情商的力量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u60CA_u4EBA_u7684_u53D1_u5C55"><span class="nav-text">惊人的发展</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u7528_u5FC3_u7BA1_u7406"><span class="nav-text">用心管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u9886_u5BFC_u662F_u5982_u4F55_u70BC_u6210_u7684"><span class="nav-text">领导是如何炼成的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u4F60_u9002_u5408_u4EC0_u4E48_u6837_u7684_u9886_u5BFC_u98CE_u683C"><span class="nav-text">你适合什么样的领导风格</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u7FA4_u5546"><span class="nav-text">群商</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5927_u8111_u548C_u60C5_u5546"><span class="nav-text">大脑和情商</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u60C5_u5546_u4E3A_u4EC0_u4E48_u5982_u6B64_u72EC_u7279"><span class="nav-text">情商为什么如此独特</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u81EA_u6211_u610F_u8BC6_uFF1A_u6211_u4EEC_u662F_u5982_u4F55_u505A_u51FA_u51B3_u5B9A_u7684"><span class="nav-text">自我意识：我们是如何做出决定的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u6700_u4F73_u5FC3_u7406_u72B6_u6001"><span class="nav-text">最佳心理状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u6253_u5F00_u521B_u610F_u4E4B_u95E8"><span class="nav-text">打开创意之门</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u81EA_u6211_u63A7_u5236_u548C_u8C03_u8282"><span class="nav-text">自我控制和调节</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u51CF_u538B_-__u6B63_u5FF5"><span class="nav-text">减压 - 正念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u60F3_u8981_u6210_u529F_uFF0C_u9700_u8981_u826F_u597D_u7684_u52A8_u673A"><span class="nav-text">想要成功，需要良好的动机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u8C03_u6574_u5230_u6700_u4F73_u5DE5_u4F5C_u72B6_u6001"><span class="nav-text">调整到最佳工作状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u5EFA_u7ACB_u826F_u597D_u7684_u793E_u4EA4_u5173_u7CFB"><span class="nav-text">建立良好的社交关系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u7F51_u7EDC_u65F6_u4EE3_u7684_u793E_u4EA4_u5546"><span class="nav-text">网络时代的社交商</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u540C_u7406_u5FC3_uFF1A_u6709_u6548_u5730_u7406_u89E3_u4ED6_u4EBA"><span class="nav-text">同理心：有效地理解他人</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u60C5_u5546_u7537_u5973_u6709_u522B"><span class="nav-text">情商男女有别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u9634_u6697_u60C5_u7EEA_uFF1A_u4ED6_u4EEC_u7F3A_u5C11_u60C5_u7EEA_u540C_u7406_u5FC3"><span class="nav-text">阴暗情绪：他们缺少情绪同理心</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u8BAD_u7EC3_u60C5_u5546_uFF1A_u4F60_u5E0C_u671B_u5927_u8111_u9ED8_u8BA4_u4EC0_u4E48_u9009_u9879"><span class="nav-text">训练情商：你希望大脑默认什么选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u793E_u4EA4_u4E8E_u60C5_u611F_u5B66_u4E60"><span class="nav-text">社交于情感学习</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siva Gao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.0"></script>
+
+
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"sivagao-blog"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("keYWlIGy4iO5M1C29zrEkLXI-gzGzoHsz", "Mtn7M5zjpMfEHLBnkOwcTuRK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+
+</body>
+</html>

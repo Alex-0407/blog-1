@@ -1,0 +1,958 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Nodejs, 前端, ES6" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Highway to the Wild" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.0" />
+
+
+
+
+
+
+<meta name="description" content="简介前端写node项目起来是很容易的，但是一些好的实践，一些提高开发效率，提高工程质量的方案如何快速无侵入的集成到 node development workflow 中起来，可能对刚上手的新人，或者是习惯了自己现有开发环境蜜罐的老人们是不那么容易的，所以该指南对一些常见问题和技巧进行收集和总结，为你的第一个 node 项目保驾护航！
+Todo
+[ ] 补完其余内容
+[ ] 优化下目录结构
+[ ]">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Node】16年，在看Node项目构建和npm scripts">
+<meta property="og:url" content="http://sivagao.com/2015-12/node-npm-scripts/index.html">
+<meta property="og:site_name" content="Highway to the Wild">
+<meta property="og:description" content="简介前端写node项目起来是很容易的，但是一些好的实践，一些提高开发效率，提高工程质量的方案如何快速无侵入的集成到 node development workflow 中起来，可能对刚上手的新人，或者是习惯了自己现有开发环境蜜罐的老人们是不那么容易的，所以该指南对一些常见问题和技巧进行收集和总结，为你的第一个 node 项目保驾护航！
+Todo
+[ ] 补完其余内容
+[ ] 优化下目录结构
+[ ]">
+<meta property="og:updated_time" content="2016-01-30T14:09:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Node】16年，在看Node项目构建和npm scripts">
+<meta name="twitter:description" content="简介前端写node项目起来是很容易的，但是一些好的实践，一些提高开发效率，提高工程质量的方案如何快速无侵入的集成到 node development workflow 中起来，可能对刚上手的新人，或者是习惯了自己现有开发环境蜜罐的老人们是不那么容易的，所以该指南对一些常见问题和技巧进行收集和总结，为你的第一个 node 项目保驾护航！
+Todo
+[ ] 补完其余内容
+[ ] 优化下目录结构
+[ ]">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: '[object Object]',
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 【Node】16年，在看Node项目构建和npm scripts | Highway to the Wild </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?968e1699fcafa46aee46e5335eb493d7";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Highway to the Wild</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">数字游民的养成~</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                【Node】16年，在看Node项目构建和npm scripts
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-12-30T07:56:29+08:00" content="2015-12-30">
+              2015-12-30
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015-12/node-npm-scripts/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015-12/node-npm-scripts/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015-12/node-npm-scripts/" class="leancloud_visitors" data-flag-title="【Node】16年，在看Node项目构建和npm scripts">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="u7B80_u4ECB"><a href="#u7B80_u4ECB" class="headerlink" title="简介"></a>简介</h2><p>前端写node项目起来是很容易的，但是一些好的实践，一些提高开发效率，提高工程质量的方案如何快速无侵入的集成到 node development workflow 中起来，可能对刚上手的新人，或者是习惯了自己现有开发环境蜜罐的老人们是不那么容易的，所以该指南对一些常见问题和技巧进行收集和总结，为你的第一个 node 项目保驾护航！</p>
+<h2 id="Todo"><a href="#Todo" class="headerlink" title="Todo"></a>Todo</h2><ul>
+<li>[ ] 补完其余内容</li>
+<li>[ ] 优化下目录结构</li>
+<li>[ ] 优化下现有的例子</li>
+<li>[ ] 导出脚手架，下次方便使用</li>
+</ul>
+<h2 id="Usage__u4F7F_u7528"><a href="#Usage__u4F7F_u7528" class="headerlink" title="Usage 使用"></a>Usage 使用</h2><!-- MarkdownTOC -->
+<ul>
+<li>在node项目中，如何使用 es6 来写</li>
+<li>如何在项目中写 API文档（用 swagger api sepc）</li>
+<li>如何在开发时，文件修改后重启项目</li>
+<li>如何做环境aware的配置</li>
+<li>如何通过环境变量配置接口等 - microserver 要求</li>
+<li>如何部署es6代码到测试环境下（ pm2 babel 结合）</li>
+<li>如何部署es6代码用于线上生产（先构建好 es5-compatible ）</li>
+<li>如何更高级的使用的配置文件</li>
+<li>如何用 supertest 做 api 测试</li>
+<li>如何用 debug 模块来打测试log和诊断问题</li>
+<li>如何通过各种hook来解耦合</li>
+<li>如何做 请求的 validate 和 sanitize</li>
+<li>es6 lint 代码检查和git hooks，precommit</li>
+<li>代码漏洞检查和扫描和依赖及时更新和锁定</li>
+<li>代码格式化 beautify 和格式化 用 xo</li>
+<li>代码覆盖率 用 lab 伊斯坦布尔工具</li>
+<li>babel-node-debug 集成 inspector 用上 devtools</li>
+<li><a href="https://github.com/es-analysis/plato" target="_blank" rel="external">https://github.com/es-analysis/plato</a> 代码质量</li>
+<li><a href="https://github.com/danielstjules/jsinspect" target="_blank" rel="external">https://github.com/danielstjules/jsinspect</a> 重复代码检查</li>
+</ul>
+<!-- /MarkdownTOC -->
+<h3 id="u5728node_u9879_u76EE_u4E2D_uFF0C_u5982_u4F55_u4F7F_u7528_es6__u6765_u5199"><a href="#u5728node_u9879_u76EE_u4E2D_uFF0C_u5982_u4F55_u4F7F_u7528_es6__u6765_u5199" class="headerlink" title="在node项目中，如何使用 es6 来写"></a>在node项目中，如何使用 es6 来写</h3><p>npm install -g babel-cli</p>
+<p>.babelrc<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"presets"</span>: [<span class="string">"es2015"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>babel-node entry.js</p>
+<p>当然也可以在local中安装 babel-register，用register的方式来运行，而不是解释器</p>
+<h3 id="u5982_u4F55_u5728_u9879_u76EE_u4E2D_u5199_API_u6587_u6863_uFF08_u7528_swagger_api_sepc_uFF09"><a href="#u5982_u4F55_u5728_u9879_u76EE_u4E2D_u5199_API_u6587_u6863_uFF08_u7528_swagger_api_sepc_uFF09" class="headerlink" title="如何在项目中写 API文档（用 swagger api sepc）"></a>如何在项目中写 API文档（用 swagger api sepc）</h3><p>在loopback中，会对model自动生成CRUD的restful 接口。对于自定义的remote method，通过api 配置说明：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">ResPkgUpdate.viewDetail = <span class="function"><span class="keyword">function</span>(<span class="params">id, cb</span>) </span>&#123;</span><br><span class="line">  ResPkg = loopback.findModel(<span class="string">'ResPkg'</span>);</span><br><span class="line"></span><br><span class="line">  ResPkgUpdate.findById(id, <span class="function"><span class="keyword">function</span>(<span class="params">err, resPkgUpdate</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(err || !resPkgUpdate) &#123;</span><br><span class="line">      debug(<span class="string">'err: cannot find resPkgUpdate by id:'</span>, id);</span><br><span class="line">      <span class="keyword">return</span> cb(err || &#123;msg: <span class="string">'error'</span>&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    cb(<span class="literal">null</span>, resPkgUpdate.resPkg.diffDetail);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ResPkgUpdate.remoteMethod(<span class="string">'viewDetail'</span>, &#123;</span><br><span class="line">  accepts: [&#123;</span><br><span class="line">    arg: <span class="string">'id'</span>, type: <span class="string">'number'</span>, required: <span class="literal">true</span></span><br><span class="line">  &#125;],</span><br><span class="line">  http: &#123;path: <span class="string">'/:id/viewDetail'</span>, verb: <span class="string">'get'</span>&#125;,</span><br><span class="line">  returns: &#123;arg: <span class="string">'result'</span>, type: <span class="string">'object'</span>&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>PS: 其他类型的项目，也可以通过工具从文件中抽取（如方法的注释）从而生成swagger spec 规范的api doc json，实在不纪，可以通过GUI工具来创作 api doc，同时借助 swagger-ui 来让前端使用和可视化调试现有的接口（提供接口参数约束，提供数据schema 查看等）</p>
+<h3 id="u5982_u4F55_u5728_u5F00_u53D1_u65F6_uFF0C_u6587_u4EF6_u4FEE_u6539_u540E_u91CD_u542F_u9879_u76EE"><a href="#u5982_u4F55_u5728_u5F00_u53D1_u65F6_uFF0C_u6587_u4EF6_u4FEE_u6539_u540E_u91CD_u542F_u9879_u76EE" class="headerlink" title="如何在开发时，文件修改后重启项目"></a>如何在开发时，文件修改后重启项目</h3><p>package.json<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"main"</span>: <span class="string">"index.js"</span>,</span><br><span class="line">  <span class="string">"scripts"</span>: &#123;</span><br><span class="line">    <span class="string">"dev"</span>: <span class="string">"nodemon --exec babel-node -- $npm_package_main"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>npm run dev</p>
+<h3 id="u5982_u4F55_u505A_u73AF_u5883aware_u7684_u914D_u7F6E"><a href="#u5982_u4F55_u505A_u73AF_u5883aware_u7684_u914D_u7F6E" class="headerlink" title="如何做环境aware的配置"></a>如何做环境aware的配置</h3><p>配置信息在conf/config.json 中。但如果conf目录下存在以环境变量 NODE_ENV 的值为名称的 json 配置文件，就会自动加载到覆盖替换原来基础配置信息。<br>这一块是透明无侵入的，只需提供不同环境下的配置信息就好，不需要在代码上区别对待。使用时候如下：</p>
+<p>app.kraken.get(‘<key>‘);</key></p>
+<h3 id="u5982_u4F55_u901A_u8FC7_u73AF_u5883_u53D8_u91CF_u914D_u7F6E_u63A5_u53E3_u7B49_-_microserver__u8981_u6C42"><a href="#u5982_u4F55_u901A_u8FC7_u73AF_u5883_u53D8_u91CF_u914D_u7F6E_u63A5_u53E3_u7B49_-_microserver__u8981_u6C42" class="headerlink" title="如何通过环境变量配置接口等 - microserver 要求"></a>如何通过环境变量配置接口等 - microserver 要求</h3><p>env: 这个标识说明从环境变量中加载配置<br>同样还有： import: 从json文件加载到当前的key下为value object</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">  <span class="string">"api"</span>: &#123;</span><br><span class="line">    <span class="string">"articleSearch"</span>: <span class="string">"env:GFWC-articleSearch"</span>,</span><br><span class="line">    <span class="string">"shopSearch"</span>: <span class="string">"env:GFWC-shopSearch"</span>,</span><br><span class="line">    <span class="string">"stockSearch"</span>: <span class="string">"env:GFWC-stockSearch"</span>,</span><br><span class="line">    <span class="string">"portfolioSearch"</span>: <span class="string">"env:GFWC-portfolioSearch"</span>,</span><br><span class="line">    <span class="string">"portfolioSelfSearch"</span>: <span class="string">"env:GFWC-portfolioSelfSearch"</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">_.extend(process.env, &#123;</span><br><span class="line">  <span class="string">"GFWC-articleSearch"</span>: <span class="string">"http://&lt;host&gt;:6602/v1/social/article/findByTitle"</span>,</span><br><span class="line">  <span class="string">"GFWC-shopSearch"</span>: <span class="string">"http://&lt;host&gt;:7700/v1/store/search/shop"</span>,</span><br><span class="line">  <span class="string">"GFWC-stockSearch"</span>: <span class="string">"http://&lt;host&gt;:3500/portfolio/search/codechain"</span>,</span><br><span class="line">  <span class="string">"GFWC-portfolioSearch"</span>: <span class="string">"http://&lt;host&gt;:3500/portfolio/search/portfolio/name"</span>,</span><br><span class="line">  <span class="string">"GFWC-portfolioSelfSearch"</span>: <span class="string">"http://&lt;host&gt;:8090/portfolio/self/search"</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="u5982_u4F55_u90E8_u7F72es6_u4EE3_u7801_u5230_u6D4B_u8BD5_u73AF_u5883_u4E0B_uFF08_pm2_babel__u7ED3_u5408_uFF09"><a href="#u5982_u4F55_u90E8_u7F72es6_u4EE3_u7801_u5230_u6D4B_u8BD5_u73AF_u5883_u4E0B_uFF08_pm2_babel__u7ED3_u5408_uFF09" class="headerlink" title="如何部署es6代码到测试环境下（ pm2 babel 结合）"></a>如何部署es6代码到测试环境下（ pm2 babel 结合）</h3><p>.pm2_config.json<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"apps"</span> : [&#123;</span><br><span class="line">    <span class="string">"name"</span>        : <span class="string">"gfwealth-composite"</span>,</span><br><span class="line">    <span class="string">"script"</span>      : <span class="string">"./entry.js"</span>,</span><br><span class="line">    <span class="string">"watch"</span>       : <span class="literal">true</span>,</span><br><span class="line">    <span class="string">"exec_interpreter"</span> : <span class="string">"babel-node"</span>,</span><br><span class="line">    <span class="string">"exec_mode"</span>        : <span class="string">"fork"</span>,</span><br><span class="line">  &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>pm2 start server/server.js –name “gfwealth-composite”</p>
+<h3 id="u5982_u4F55_u90E8_u7F72es6_u4EE3_u7801_u7528_u4E8E_u7EBF_u4E0A_u751F_u4EA7_uFF08_u5148_u6784_u5EFA_u597D_es5-compatible__uFF09"><a href="#u5982_u4F55_u90E8_u7F72es6_u4EE3_u7801_u7528_u4E8E_u7EBF_u4E0A_u751F_u4EA7_uFF08_u5148_u6784_u5EFA_u597D_es5-compatible__uFF09" class="headerlink" title="如何部署es6代码用于线上生产（先构建好 es5-compatible ）"></a>如何部署es6代码用于线上生产（先构建好 es5-compatible ）</h3><h3 id="u5982_u4F55_u66F4_u9AD8_u7EA7_u7684_u4F7F_u7528_u7684_u914D_u7F6E_u6587_u4EF6"><a href="#u5982_u4F55_u66F4_u9AD8_u7EA7_u7684_u4F7F_u7528_u7684_u914D_u7F6E_u6587_u4EF6" class="headerlink" title="如何更高级的使用的配置文件"></a>如何更高级的使用的配置文件</h3><p>参考使用 shortstop-handlers 来给 config 配置项，如 file:, env:, import: 等handler</p>
+<h3 id="u5982_u4F55_u7528_supertest__u505A_api__u6D4B_u8BD5"><a href="#u5982_u4F55_u7528_supertest__u505A_api__u6D4B_u8BD5" class="headerlink" title="如何用 supertest 做 api 测试"></a>如何用 supertest 做 api 测试</h3><h3 id="u5982_u4F55_u7528_debug__u6A21_u5757_u6765_u6253_u6D4B_u8BD5log_u548C_u8BCA_u65AD_u95EE_u9898"><a href="#u5982_u4F55_u7528_debug__u6A21_u5757_u6765_u6253_u6D4B_u8BD5log_u548C_u8BCA_u65AD_u95EE_u9898" class="headerlink" title="如何用 debug 模块来打测试log和诊断问题"></a>如何用 debug 模块来打测试log和诊断问题</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">debug = <span class="built_in">require</span>(<span class="string">'debug'</span>)(<span class="string">'ctrl:search'</span>)</span><br><span class="line"></span><br><span class="line">debug(<span class="string">`ok:http:<span class="subst">$&#123;type&#125;</span>:<span class="subst">$&#123;resp.req.path&#125;</span>`</span>);</span><br></pre></td></tr></table></figure>
+<p>NODE=”ctrl:<em>,model:</em>“ node .</p>
+<h3 id="u5982_u4F55_u901A_u8FC7_u5404_u79CDhook_u6765_u89E3_u8026_u5408"><a href="#u5982_u4F55_u901A_u8FC7_u5404_u79CDhook_u6765_u89E3_u8026_u5408" class="headerlink" title="如何通过各种hook来解耦合"></a>如何通过各种hook来解耦合</h3><p>一般框架会支持资源 CRUD 等操作的operational hook，<br>同时也有 remoteMethod hook和application lifecycle hook。</p>
+<h3 id="u5982_u4F55_u505A__u8BF7_u6C42_u7684_validate__u548C_sanitize"><a href="#u5982_u4F55_u505A__u8BF7_u6C42_u7684_validate__u548C_sanitize" class="headerlink" title="如何做 请求的 validate 和 sanitize"></a>如何做 请求的 validate 和 sanitize</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">req.assert(<span class="string">'query'</span>, <span class="string">'Invalid query'</span>).notEmpty();</span><br><span class="line">req.checkQuery(<span class="string">'page'</span>, <span class="string">'Invalid page'</span>).notEmpty().isInt();</span><br><span class="line">req.checkParam(<span class="string">'type'</span>, <span class="string">'Invalid type'</span>)</span><br><span class="line">  .isIn([<span class="string">'aritlce'</span>, <span class="string">'stock'</span>, <span class="string">'shop'</span>]);</span><br><span class="line">  </span><br><span class="line">req.sanitizeParams(<span class="string">'urlparam'</span>).toBoolean();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> errors = req.validationErrors();</span><br><span class="line"><span class="keyword">if</span>(errors) <span class="keyword">return</span> res.send(errors, <span class="number">400</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="es6_lint__u4EE3_u7801_u68C0_u67E5_u548Cgit_hooks_uFF0Cprecommit"><a href="#es6_lint__u4EE3_u7801_u68C0_u67E5_u548Cgit_hooks_uFF0Cprecommit" class="headerlink" title="es6 lint 代码检查和git hooks，precommit"></a>es6 lint 代码检查和git hooks，precommit</h3><h3 id="u4EE3_u7801_u6F0F_u6D1E_u68C0_u67E5_u548C_u626B_u63CF_u548C_u4F9D_u8D56_u53CA_u65F6_u66F4_u65B0_u548C_u9501_u5B9A"><a href="#u4EE3_u7801_u6F0F_u6D1E_u68C0_u67E5_u548C_u626B_u63CF_u548C_u4F9D_u8D56_u53CA_u65F6_u66F4_u65B0_u548C_u9501_u5B9A" class="headerlink" title="代码漏洞检查和扫描和依赖及时更新和锁定"></a>代码漏洞检查和扫描和依赖及时更新和锁定</h3><h3 id="u4EE3_u7801_u683C_u5F0F_u5316_beautify__u548C_u683C_u5F0F_u5316__u7528_xo"><a href="#u4EE3_u7801_u683C_u5F0F_u5316_beautify__u548C_u683C_u5F0F_u5316__u7528_xo" class="headerlink" title="代码格式化 beautify 和格式化 用 xo"></a>代码格式化 beautify 和格式化 用 xo</h3><h3 id="u4EE3_u7801_u8986_u76D6_u7387__u7528_lab__u4F0A_u65AF_u5766_u5E03_u5C14_u5DE5_u5177"><a href="#u4EE3_u7801_u8986_u76D6_u7387__u7528_lab__u4F0A_u65AF_u5766_u5E03_u5C14_u5DE5_u5177" class="headerlink" title="代码覆盖率 用 lab 伊斯坦布尔工具"></a>代码覆盖率 用 lab 伊斯坦布尔工具</h3><h3 id="babel-node-debug__u96C6_u6210_inspector__u7528_u4E0A_devtools"><a href="#babel-node-debug__u96C6_u6210_inspector__u7528_u4E0A_devtools" class="headerlink" title="babel-node-debug 集成 inspector 用上 devtools"></a>babel-node-debug 集成 inspector 用上 devtools</h3><h3 id="https_3A//github-com/es-analysis/plato__u4EE3_u7801_u8D28_u91CF"><a href="#https_3A//github-com/es-analysis/plato__u4EE3_u7801_u8D28_u91CF" class="headerlink" title="https://github.com/es-analysis/plato 代码质量"></a><a href="https://github.com/es-analysis/plato" target="_blank" rel="external">https://github.com/es-analysis/plato</a> 代码质量</h3><p><a href="https://segmentfault.com/a/1190000002434755" target="_blank" rel="external">https://segmentfault.com/a/1190000002434755</a></p>
+<h3 id="https_3A//github-com/danielstjules/jsinspect__u91CD_u590D_u4EE3_u7801_u68C0_u67E5"><a href="#https_3A//github-com/danielstjules/jsinspect__u91CD_u590D_u4EE3_u7801_u68C0_u67E5" class="headerlink" title="https://github.com/danielstjules/jsinspect 重复代码检查"></a><a href="https://github.com/danielstjules/jsinspect" target="_blank" rel="external">https://github.com/danielstjules/jsinspect</a> 重复代码检查</h3>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag">#JavaScript</a>
+          
+            <a href="/tags/Node-js/" rel="tag">#Node.js</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015-12/book-emotion-quanity/" rel="next" title="【读书笔记】情商">
+                <i class="fa fa-chevron-left"></i> 【读书笔记】情商
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016-01/node-新项目注意点-2016篇/" rel="prev" title="【Node】16年，新 Node 项目注意点">
+                【Node】16年，新 Node 项目注意点 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015-12/node-npm-scripts/"
+           data-title="【Node】16年，在看Node项目构建和npm scripts" data-url="http://sivagao.com/2015-12/node-npm-scripts/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://sivagao.com/content/images/2015/09/avatar.jpg"
+               alt="Siva Gao" />
+          <p class="site-author-name" itemprop="name">Siva Gao</p>
+          <p class="site-description motion-element" itemprop="description">sivagao's home blog which archives something fun</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/gaohailang" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/ghlndsl" target="_blank">
+                  
+                    <i class="fa fa-twitter"></i> Twitter
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1siva" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i> Weibo
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.douban.com/people/sivaGao/" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> DouBan
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/1siva" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> ZhiHu
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#u7B80_u4ECB"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Todo"><span class="nav-text">Todo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Usage__u4F7F_u7528"><span class="nav-text">Usage 使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#u5728node_u9879_u76EE_u4E2D_uFF0C_u5982_u4F55_u4F7F_u7528_es6__u6765_u5199"><span class="nav-text">在node项目中，如何使用 es6 来写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5982_u4F55_u5728_u9879_u76EE_u4E2D_u5199_API_u6587_u6863_uFF08_u7528_swagger_api_sepc_uFF09"><span class="nav-text">如何在项目中写 API文档（用 swagger api sepc）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5982_u4F55_u5728_u5F00_u53D1_u65F6_uFF0C_u6587_u4EF6_u4FEE_u6539_u540E_u91CD_u542F_u9879_u76EE"><span class="nav-text">如何在开发时，文件修改后重启项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5982_u4F55_u505A_u73AF_u5883aware_u7684_u914D_u7F6E"><span class="nav-text">如何做环境aware的配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5982_u4F55_u901A_u8FC7_u73AF_u5883_u53D8_u91CF_u914D_u7F6E_u63A5_u53E3_u7B49_-_microserver__u8981_u6C42"><span class="nav-text">如何通过环境变量配置接口等 - microserver 要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5982_u4F55_u90E8_u7F72es6_u4EE3_u7801_u5230_u6D4B_u8BD5_u73AF_u5883_u4E0B_uFF08_pm2_babel__u7ED3_u5408_uFF09"><span class="nav-text">如何部署es6代码到测试环境下（ pm2 babel 结合）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5982_u4F55_u90E8_u7F72es6_u4EE3_u7801_u7528_u4E8E_u7EBF_u4E0A_u751F_u4EA7_uFF08_u5148_u6784_u5EFA_u597D_es5-compatible__uFF09"><span class="nav-text">如何部署es6代码用于线上生产（先构建好 es5-compatible ）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5982_u4F55_u66F4_u9AD8_u7EA7_u7684_u4F7F_u7528_u7684_u914D_u7F6E_u6587_u4EF6"><span class="nav-text">如何更高级的使用的配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5982_u4F55_u7528_supertest__u505A_api__u6D4B_u8BD5"><span class="nav-text">如何用 supertest 做 api 测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5982_u4F55_u7528_debug__u6A21_u5757_u6765_u6253_u6D4B_u8BD5log_u548C_u8BCA_u65AD_u95EE_u9898"><span class="nav-text">如何用 debug 模块来打测试log和诊断问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5982_u4F55_u901A_u8FC7_u5404_u79CDhook_u6765_u89E3_u8026_u5408"><span class="nav-text">如何通过各种hook来解耦合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5982_u4F55_u505A__u8BF7_u6C42_u7684_validate__u548C_sanitize"><span class="nav-text">如何做 请求的 validate 和 sanitize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#es6_lint__u4EE3_u7801_u68C0_u67E5_u548Cgit_hooks_uFF0Cprecommit"><span class="nav-text">es6 lint 代码检查和git hooks，precommit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u4EE3_u7801_u6F0F_u6D1E_u68C0_u67E5_u548C_u626B_u63CF_u548C_u4F9D_u8D56_u53CA_u65F6_u66F4_u65B0_u548C_u9501_u5B9A"><span class="nav-text">代码漏洞检查和扫描和依赖及时更新和锁定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u4EE3_u7801_u683C_u5F0F_u5316_beautify__u548C_u683C_u5F0F_u5316__u7528_xo"><span class="nav-text">代码格式化 beautify 和格式化 用 xo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u4EE3_u7801_u8986_u76D6_u7387__u7528_lab__u4F0A_u65AF_u5766_u5E03_u5C14_u5DE5_u5177"><span class="nav-text">代码覆盖率 用 lab 伊斯坦布尔工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#babel-node-debug__u96C6_u6210_inspector__u7528_u4E0A_devtools"><span class="nav-text">babel-node-debug 集成 inspector 用上 devtools</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#https_3A//github-com/es-analysis/plato__u4EE3_u7801_u8D28_u91CF"><span class="nav-text">https://github.com/es-analysis/plato 代码质量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#https_3A//github-com/danielstjules/jsinspect__u91CD_u590D_u4EE3_u7801_u68C0_u67E5"><span class="nav-text">https://github.com/danielstjules/jsinspect 重复代码检查</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siva Gao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.0"></script>
+
+
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"sivagao-blog"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("keYWlIGy4iO5M1C29zrEkLXI-gzGzoHsz", "Mtn7M5zjpMfEHLBnkOwcTuRK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+
+</body>
+</html>

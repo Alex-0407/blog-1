@@ -1,0 +1,944 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Nodejs, 前端, ES6" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Highway to the Wild" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.0" />
+
+
+
+
+
+
+<meta name="description" content="Ionic 系列 - Navigation 和 ionHistory 详解navigation，本身是个简单的概念。用户使用不同功能，在不同页面跳转，同时提供回退，前进功能来方便用户。但是遇到如下场景和需求就会让问题变得开始棘手起来。
+
+去做任务B，必须先完成A（甚至它还有前置任务），然后跳转回来。
+在完成任务后，返回不能回到之前的步骤过程页，而是回到任务入口页。
+一些关键步骤不能跳过
+Andro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【ionic】Navigation 和 ionHistory 详解">
+<meta property="og:url" content="http://sivagao.com/2015-10/ionic-navigation-history/index.html">
+<meta property="og:site_name" content="Highway to the Wild">
+<meta property="og:description" content="Ionic 系列 - Navigation 和 ionHistory 详解navigation，本身是个简单的概念。用户使用不同功能，在不同页面跳转，同时提供回退，前进功能来方便用户。但是遇到如下场景和需求就会让问题变得开始棘手起来。
+
+去做任务B，必须先完成A（甚至它还有前置任务），然后跳转回来。
+在完成任务后，返回不能回到之前的步骤过程页，而是回到任务入口页。
+一些关键步骤不能跳过
+Andro">
+<meta property="og:updated_time" content="2016-01-30T14:06:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【ionic】Navigation 和 ionHistory 详解">
+<meta name="twitter:description" content="Ionic 系列 - Navigation 和 ionHistory 详解navigation，本身是个简单的概念。用户使用不同功能，在不同页面跳转，同时提供回退，前进功能来方便用户。但是遇到如下场景和需求就会让问题变得开始棘手起来。
+
+去做任务B，必须先完成A（甚至它还有前置任务），然后跳转回来。
+在完成任务后，返回不能回到之前的步骤过程页，而是回到任务入口页。
+一些关键步骤不能跳过
+Andro">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: '[object Object]',
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 【ionic】Navigation 和 ionHistory 详解 | Highway to the Wild </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?968e1699fcafa46aee46e5335eb493d7";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Highway to the Wild</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">数字游民的养成~</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                【ionic】Navigation 和 ionHistory 详解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-10-30T18:56:29+08:00" content="2015-10-30">
+              2015-10-30
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015-10/ionic-navigation-history/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015-10/ionic-navigation-history/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015-10/ionic-navigation-history/" class="leancloud_visitors" data-flag-title="【ionic】Navigation 和 ionHistory 详解">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Ionic__u7CFB_u5217_-_Navigation__u548C_ionHistory__u8BE6_u89E3"><a href="#Ionic__u7CFB_u5217_-_Navigation__u548C_ionHistory__u8BE6_u89E3" class="headerlink" title="Ionic 系列 - Navigation 和 ionHistory 详解"></a>Ionic 系列 - Navigation 和 ionHistory 详解</h1><p>navigation，本身是个简单的概念。用户使用不同功能，在不同页面跳转，同时提供回退，前进功能来方便用户。但是遇到如下场景和需求就会让问题变得开始棘手起来。</p>
+<ul>
+<li>去做任务B，必须先完成A（甚至它还有前置任务），然后跳转回来。</li>
+<li>在完成任务后，返回不能回到之前的步骤过程页，而是回到任务入口页。</li>
+<li>一些关键步骤不能跳过</li>
+<li>Android系统有自己系统级的返回键需要特殊处理</li>
+<li>iOS 有自己的 swipe back 的使用习惯</li>
+<li>页面的任务入口需要检查不同的权限（是否登录，用户是否实名验证，用户是否风险测评）</li>
+<li>一些特定的 UI 影响 navigation（如 tabs, side-menus，引入 history stack 概念</li>
+</ul>
+<p>下面我们依次来解决这些问题，理解 Ionic 中 navigation 和 $ionHistory 用法和hack</p>
+<h2 id="u57FA_u672C_u7528_u6CD5"><a href="#u57FA_u672C_u7528_u6CD5" class="headerlink" title="基本用法"></a>基本用法</h2><p>navigation 主要涉及 ionNavView（替换掉原来 ui-router 的 ui-view），还有 ionNavBar, nav-transition, nav-buttons 等。<br><a href="http://ionicframework.com/docs/api/directive/ionNavView/" target="_blank" rel="external">http://ionicframework.com/docs/api/directive/ionNavView/</a></p>
+<h2 id="u5B9E_u9645_u5F00_u53D1_u9047_u5230_u7684_u95EE_u9898"><a href="#u5B9E_u9645_u5F00_u53D1_u9047_u5230_u7684_u95EE_u9898" class="headerlink" title="实际开发遇到的问题"></a>实际开发遇到的问题</h2><p>以下的问题单独解决起来都不能，但是如何在不侵入原来代码和流程的情况下，在外围（global ctrl &amp;&amp; ionic 层）提供一些快捷方法来处理这些case，而不是在业务代码中处理。</p>
+<h3 id="u524D_u7F6E_u4EFB_u52A1_u5B8C_u540E_u8DF3_u56DE"><a href="#u524D_u7F6E_u4EFB_u52A1_u5B8C_u540E_u8DF3_u56DE" class="headerlink" title="前置任务完后跳回"></a>前置任务完后跳回</h3><p>在 <code>ui-router</code> 下，我们常常使用  $state.go 来跳转页面进入不同的状态。但是当在前置任务需要完成的情况下，我们通过增强 $state 来提供 goAndBack 和 backOrGo 的功能。<br>前者是说跳到前置任务页，并且标示自己需要返回。<br>后者在结果页中申明说如果这个task B是其他task A的前置任务那么需要回退到task A，否则就到自己的默认下一页</p>
+<p>使用： 在需要授权操作的 <code>asset-index</code> 有 <code>auth-sref</code>（其中调用了<br><code>goAndBack(&#39;login-index&#39;)</code>），在登录成功后会检查 <code>hasBack()</code>，调用 ·。这样登录成功自动进入 <code>assets-index</code> 而不是默认登录成功后的 <code>home-index</code> 页</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">$state.backOrGo = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>($state.hasBack()) <span class="keyword">return</span> $state.back();</span><br><span class="line">  resetStateBack();</span><br><span class="line">  $state.go.apply($state, <span class="built_in">arguments</span>);</span><br><span class="line">&#125;;</span><br><span class="line">$state.goAndBack = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  stateBack = $state.current.name;</span><br><span class="line">  stateBackParam = $state.params;</span><br><span class="line">  $state.go.apply(<span class="literal">null</span>, <span class="built_in">arguments</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> stateBack = <span class="literal">null</span>, stateBackParam;</span><br><span class="line">$state.hasBack = ()=&gt;&#123;</span><br><span class="line">  <span class="keyword">if</span>(stateBack) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">resetStateBack</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  stateBack = <span class="literal">null</span></span><br><span class="line">  stateBackParam = <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line">$state.back = ()=&gt;&#123;</span><br><span class="line">  <span class="keyword">var</span> ionHist = $ionicHistory.viewHistory();</span><br><span class="line">  <span class="keyword">var</span> hId = ionHist.currentView.historyId;</span><br><span class="line">  <span class="keyword">var</span> stack = ionHist.histories[hId].stack, len = stack.length, count;</span><br><span class="line">  <span class="keyword">var</span> hasGone = _.any(stack, (i, idx)=&gt;&#123;</span><br><span class="line">    i = stack[len-<span class="number">1</span>-idx];</span><br><span class="line">    <span class="keyword">if</span>(i.stateName === stateBack) &#123;</span><br><span class="line">      count = -(idx);</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">  resetStateBack();</span><br><span class="line">  <span class="keyword">if</span>(!hasGone) count = -<span class="number">1</span>;</span><br><span class="line">  $ionicHistory.goBack(count);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="u7ED3_u679C_u9875_u56DE_u9000_u5230_u5165_u53E3_u800C_u4E0D_u662F_u4E0A_u4E00_u6B65_u9AA4_u9875"><a href="#u7ED3_u679C_u9875_u56DE_u9000_u5230_u5165_u53E3_u800C_u4E0D_u662F_u4E0A_u4E00_u6B65_u9AA4_u9875" class="headerlink" title="结果页回退到入口而不是上一步骤页"></a>结果页回退到入口而不是上一步骤页</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> isInjectBackRoute = <span class="literal">false</span>, injectBackRoute;</span><br><span class="line">scope.__injectBackRoute = (r)=&gt;&#123;</span><br><span class="line">  isInjectBackRoute = <span class="literal">true</span>;</span><br><span class="line">  injectBackRoute = r;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">scope.$ionicGoBack = <span class="function"><span class="keyword">function</span>(<span class="params">backCount</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(isInjectBackRoute) &#123;</span><br><span class="line">    scope.__route(injectBackRoute);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    $ionicHistory.goBack(backCount);</span><br><span class="line">  &#125;</span><br><span class="line">  isInjectBackRoute = <span class="literal">false</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="u5173_u952E_u6B65_u9AA4_28_u9875_29_u4E0D_u80FD_u8FD4_u56DE_u8DF3_u8FC7"><a href="#u5173_u952E_u6B65_u9AA4_28_u9875_29_u4E0D_u80FD_u8FD4_u56DE_u8DF3_u8FC7" class="headerlink" title="关键步骤(页)不能返回跳过"></a>关键步骤(页)不能返回跳过</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">ion-nav-bar</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">ion-nav-back-button</span> <span class="attribute">class</span>=<span class="value">"button-link"</span></span><br><span class="line">    <span class="attribute">ng-hide</span>=<span class="value">"__isDisableBack"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">i</span> <span class="attribute">class</span>=<span class="value">"ion-ios-arrow-left"</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">ion-nav-back-button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">ion-nav-bar</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">scope.__isDisableBack = <span class="literal">false</span>;</span><br><span class="line">scope.__disableBack = ()=&gt;&#123;</span><br><span class="line">  scope.__isDisableBack = <span class="literal">true</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">scope.__restoreRoute = (r)=&gt;&#123;</span><br><span class="line">  isInjectBackRoute = <span class="literal">false</span>;</span><br><span class="line">  scope.__isDisableBack = <span class="literal">false</span>;</span><br><span class="line">  <span class="comment">/*$ionicPlatform.offHardwareBackButton(disBackSystemBtn); */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在 $stateChangeSuccess 等页面跳转中清除对router的修改，__restoreRoute</span></span><br></pre></td></tr></table></figure>
+<h3 id="Android__u7CFB_u7EDF_u7EA7_u7684_u8FD4_u56DE_u952E_u5904_u7406"><a href="#Android__u7CFB_u7EDF_u7EA7_u7684_u8FD4_u56DE_u952E_u5904_u7406" class="headerlink" title="Android 系统级的返回键处理"></a>Android 系统级的返回键处理</h3><p>把 Android 的回退按钮的 fallback 到被injected 的$ionicGoBack 和 __isDisableBack. 前者来提供定制的回退（如结果页到入口页），后者来屏蔽返回（如在强制步骤页不许跳出回退）</p>
+<p>ionic 在 platform service 中提供来hook来拦截 backbutton action。registerBackButtonAction(handler, proirty)</p>
+<p>Ionic 自带的优先级如下：</p>
+<ul>
+<li>Return to previous view = 100</li>
+<li>Close side menu = 150</li>
+<li>Dismiss modal = 200</li>
+<li>Close action sheet = 300</li>
+<li>Dismiss popup = 400</li>
+<li>Dismiss loading overlay = 500</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ionicPlatform.registerBackButtonAction((e)=&gt;&#123;</span><br><span class="line">  <span class="keyword">if</span>(!scope.__isDisableBack) &#123;</span><br><span class="line">    scope.$ionicGoBack(); <span class="comment">// isInjectBackRoute dont care</span></span><br><span class="line">  &#125;</span><br><span class="line">  e.preventDefault();</span><br><span class="line">  e.stopPropagation();</span><br><span class="line">&#125;, <span class="number">101</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="u4EFB_u52A1_u5165_u53E3_u9700_u8981_u68C0_u67E5_u4E0D_u540C_u7684_u6743_u9650"><a href="#u4EFB_u52A1_u5165_u53E3_u9700_u8981_u68C0_u67E5_u4E0D_u540C_u7684_u6743_u9650" class="headerlink" title="任务入口需要检查不同的权限"></a>任务入口需要检查不同的权限</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># 是否登录，用户是否实名验证，用户是否风险测评</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">  auth-sref directive</span><br><span class="line">  &lt;a auth-sref="assets-hold"&gt;我的持仓&lt;/a&gt;</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">export default ($state) =&gt; &#123;</span><br><span class="line">  return function(scope, elem, attrs) &#123;</span><br><span class="line">    elem.on('click', (e)=&gt;&#123;</span><br><span class="line">      if(scope.__needLogin()) return;</span><br><span class="line">      $state.go(attrs.authSref);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Global Methods:</span><br><span class="line">scope.__needLogin = ()=&gt;&#123;</span><br><span class="line">  var account = $storage.userData;</span><br><span class="line">  if(!account) &#123;</span><br><span class="line">    // $notice.xinfo('请先登录');</span><br><span class="line">    $state.goAndBack('login-index');</span><br><span class="line">    return true;</span><br><span class="line">  &#125;</span><br><span class="line">  return false;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag">#JavaScript</a>
+          
+            <a href="/tags/ionic/" rel="tag">#ionic</a>
+          
+            <a href="/tags/混合应用/" rel="tag">#混合应用</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015-10/ionic-view-cache/" rel="next" title="【ionic】玩转 view cache">
+                <i class="fa fa-chevron-left"></i> 【ionic】玩转 view cache
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015-11/ionic-update/" rel="prev" title="【ionic】Ionic/cordova App 更新机制总结">
+                【ionic】Ionic/cordova App 更新机制总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015-10/ionic-navigation-history/"
+           data-title="【ionic】Navigation 和 ionHistory 详解" data-url="http://sivagao.com/2015-10/ionic-navigation-history/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://sivagao.com/content/images/2015/09/avatar.jpg"
+               alt="Siva Gao" />
+          <p class="site-author-name" itemprop="name">Siva Gao</p>
+          <p class="site-description motion-element" itemprop="description">sivagao's home blog which archives something fun</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/gaohailang" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/ghlndsl" target="_blank">
+                  
+                    <i class="fa fa-twitter"></i> Twitter
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1siva" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i> Weibo
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.douban.com/people/sivaGao/" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> DouBan
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/1siva" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> ZhiHu
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ionic__u7CFB_u5217_-_Navigation__u548C_ionHistory__u8BE6_u89E3"><span class="nav-text">Ionic 系列 - Navigation 和 ionHistory 详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#u57FA_u672C_u7528_u6CD5"><span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u5B9E_u9645_u5F00_u53D1_u9047_u5230_u7684_u95EE_u9898"><span class="nav-text">实际开发遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#u524D_u7F6E_u4EFB_u52A1_u5B8C_u540E_u8DF3_u56DE"><span class="nav-text">前置任务完后跳回</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u7ED3_u679C_u9875_u56DE_u9000_u5230_u5165_u53E3_u800C_u4E0D_u662F_u4E0A_u4E00_u6B65_u9AA4_u9875"><span class="nav-text">结果页回退到入口而不是上一步骤页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5173_u952E_u6B65_u9AA4_28_u9875_29_u4E0D_u80FD_u8FD4_u56DE_u8DF3_u8FC7"><span class="nav-text">关键步骤(页)不能返回跳过</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android__u7CFB_u7EDF_u7EA7_u7684_u8FD4_u56DE_u952E_u5904_u7406"><span class="nav-text">Android 系统级的返回键处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u4EFB_u52A1_u5165_u53E3_u9700_u8981_u68C0_u67E5_u4E0D_u540C_u7684_u6743_u9650"><span class="nav-text">任务入口需要检查不同的权限</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siva Gao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.0"></script>
+
+
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"sivagao-blog"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("keYWlIGy4iO5M1C29zrEkLXI-gzGzoHsz", "Mtn7M5zjpMfEHLBnkOwcTuRK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+
+</body>
+</html>
