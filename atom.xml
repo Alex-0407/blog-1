@@ -4,7 +4,7 @@
   <subtitle><![CDATA[数字游民的养成~]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://sivagao.com/"/>
-  <updated>2016-01-30T08:02:37.000Z</updated>
+  <updated>2016-01-31T13:22:10.000Z</updated>
   <id>http://sivagao.com/</id>
   
   <author>
@@ -15,11 +15,41 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[【HowTo】一小时搭建个论坛 - Discourse 篇]]></title>
+    <link href="http://sivagao.com/2016-01/howto-discourse-forum/"/>
+    <id>http://sivagao.com/2016-01/howto-discourse-forum/</id>
+    <published>2016-01-31T13:22:10.000Z</published>
+    <updated>2016-01-31T13:22:10.000Z</updated>
+    <content type="html"><![CDATA[<h3 id="u8D77_u56E0"><a href="#u8D77_u56E0" class="headerlink" title="起因"></a>起因</h3><p>很早就关注了数字游民这个话题，现在国内也慢慢的新起来，但是好像搜索了一圈以后没有什么论坛站点来聚集网友们。同时，国外的围绕着 nomad list 的 slack hashtag nomad 早就在那么圈子很火了。所以证明需求是有的，国内的发展也是可期的（虽然对于潜在的数字游民英语应该都不差），我还是非常想搭建这样的论坛来把牧民们汇集起来。</p>
+<h3 id="u9009_u578B"><a href="#u9009_u578B" class="headerlink" title="选型"></a>选型</h3><p>这个几乎没什么好说的，slack 因为可以archive 聊天信息，甚至可以给特定信息 highlight，有作为社区的潜质，但是它更多还仅仅是个聊天工具~ 其他诸如Discuz，NodeBB 都是过去时了，样式和玩法太老旧了。通用的平台也不够强大（如贴吧太low，豆瓣小组太简单，其他web上不容易搜索如陌陌，same等）。但是之前玩 ionic 时候对 forum.ionic.com 一直很喜欢，所以毫不犹豫的选择了 <a href="http://www.discourse.org/" target="_blank" rel="external">Discourse</a> 。事实证明它的确很棒（虽然是 Ember 框架写的）<br><img src="/../images/QQ20160131-3.jpg" alt="QQ20160131-3"></p>
+<h3 id="u8FC7_u7A0B"><a href="#u8FC7_u7A0B" class="headerlink" title="过程"></a>过程</h3><p>这个部署按照我的一开始打算应该是容易迁移和部署的。 所以毫无疑问选了 <a href="https://github.com/discourse/discourse_docker" target="_blank" rel="external">docker镜像</a>。 具体安装步骤和设置更改有<a href="https://github.com/discourse/discourse/blob/master/docs/INSTALL-cloud.md" target="_blank" rel="external">安装文档</a></p>
+<p>所以，我毫不犹豫选择了我免费一年的aws套餐 ec2 实例开始折腾：</p>
+<h4 id="ssh__u5230_u673A_u5668"><a href="#ssh__u5230_u673A_u5668" class="headerlink" title="ssh 到机器"></a>ssh 到机器</h4><h4 id="u6253_u5F00_docker_daemon"><a href="#u6253_u5F00_docker_daemon" class="headerlink" title="打开 docker daemon"></a>打开 docker daemon</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cannot connect to the docker daemon:&#10;docker daemon // -d &#36873;&#39033;&#20808;&#21551;&#21160;&#10;service docker stop&#10;ps aux|grep docker &#31561;</span><br></pre></td></tr></table></figure>
+<h4 id="u4E0B_u8F7D_u4EE3_u7801"><a href="#u4E0B_u8F7D_u4EE3_u7801" class="headerlink" title="下载代码"></a>下载代码</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /var/discourse&#10;git clone https://github.com/discourse/discourse_docker.git /var/discourse&#10;cd /var/discourse&#10;cp samples/standalone.yml containers/app.yml</span><br></pre></td></tr></table></figure>
+<h4 id="u4FEE_u6539_u914D_u7F6E"><a href="#u4FEE_u6539_u914D_u7F6E" class="headerlink" title="修改配置"></a>修改配置</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#20027;&#35201;&#26159;developer email&#65292;&#21518;&#38754;&#27880;&#20876;&#29992;&#36825;&#20010;email&#27880;&#20876;&#20250;&#33258;&#21160;&#26377;admin&#36523;&#20221;&#10;&#10;&#37038;&#20214;&#26381;&#21153;&#36873;&#25321;&#65306;smtp &#26381;&#21153; mailgun &#21518;&#21488;&#10;&#35774;&#32622;&#19968;&#30058;&#21518;&#25214;&#21040;&#37197;&#32622;&#39033; DISCOURSE_SMTP_ADDRESS&#65292;DISCOURSE_SMTP_PORT&#65292;DISCOURSE_SMTP_USER_NAME&#65292;DISCOURSE_SMTP_PASSWORD &#31561;&#10;&#32852;&#31995;&#20102;&#19979; mailgun &#30340;&#20154;&#65292;&#37038;&#31665;&#21448;&#33021;&#29992;&#20102;&#65292;&#20043;&#21069;&#34987;disable&#25481;&#10;&#21487;&#20197;&#30475;&#21457;&#36865;&#25968;&#25454;&#21644;log&#65292;&#25171;&#24320;&#21040;&#36798;&#29575;&#31561;&#31561; &#21518;&#21488; https://mailgun.com/app/logs/&#10;todo: &#28155;&#21152; txt &#35760;&#24405;dnspod &#20351;&#24471;&#21487;&#20197;&#29992;sivagao.com &#21457;&#36865;&#37038;&#20214; custom domain&#10;&#10;&#22240;&#20026;aws ec2 &#20813;&#36153;&#26426;&#22120;&#30340;&#20869;&#23384;&#19981;&#22815;&#65292;&#25152;&#20197;&#35201;&#20462;&#25913;&#37197;&#32622; UNICORN_WORKERS &#65306;2 &#20004;&#20010;&#23454;&#20363;&#65292;128M &#26469;&#32531;&#23384;&#31561;</span><br></pre></td></tr></table></figure>
+<p>一开始邮件发不了，但是没法激活。通过<a href="https://meta.discourse.org/t/create-admin-account-from-console/17274" target="_blank" rel="external">命令行来创建管理员帐号</a></p>
+<h4 id="u7F16_u8BD1_u548C_u542F_u52A8"><a href="#u7F16_u8BD1_u548C_u542F_u52A8" class="headerlink" title="编译和启动"></a>编译和启动</h4><p>./launcher bootstrap app #大概几分钟，中间还提示机器不够用…<br>./launcher start app</p>
+<p>配置 DNS，需要添加一个 A 记录，来把 discourse.sivagao.com 打到 aws机器上。</p>
+<h4 id="u7AD9_u70B9_u540E_u53F0_u548C_u914D_u7F6E"><a href="#u7AD9_u70B9_u540E_u53F0_u548C_u914D_u7F6E" class="headerlink" title="站点后台和配置"></a>站点后台和配置</h4><p>很顺畅的就部署完毕，浏览器访问一切正常。进入后台设置站点名称和logo（用keynote和两款漂亮的字体搞定），系统语言等。并且把一些文章如welcome欢迎页等建立起来</p>
+<p><img src="/../images/QQ20160131-0.jpg" alt="QQ20160131-0"></p>
+<p><img src="/../images/QQ20160131-2.jpg" alt="QQ20160131-2"></p>
+<p><img src="/../images/QQ20160131-1.jpg" alt="QQ20160131-1"></p>
+<h3 id="u4E0A_u7EBF_u5566_uFF0C_u6492_u82B1"><a href="#u4E0A_u7EBF_u5566_uFF0C_u6492_u82B1" class="headerlink" title="上线啦，撒花"></a>上线啦，撒花</h3><p><a href="http://discourse.sivagao.com" target="_blank" rel="external">欢迎光临 - 数字游民</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h3 id="u8D77_u56E0"><a href="#u8D77_u56E0" class="headerlink" title="起因"></a>起因</h3><p>很早就关注了数字游民这个话题，现在国内也慢慢的新起来，但是好像搜索了一圈以后没有什么论坛站点来聚集网友们]]>
+    </summary>
+    
+      <category term="HowTo" scheme="http://sivagao.com/categories/HowTo/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[【Angular2】开发指南 2. 架构综述]]></title>
     <link href="http://sivagao.com/2016-01/angular2-transalte-angular2-overview/"/>
     <id>http://sivagao.com/2016-01/angular2-transalte-angular2-overview/</id>
-    <published>2016-01-30T08:02:37.000Z</published>
-    <updated>2016-01-30T08:02:37.000Z</updated>
+    <published>2016-01-31T13:22:04.000Z</published>
+    <updated>2016-01-31T13:22:04.000Z</updated>
     <content type="html"><![CDATA[<h2 id="u67B6_u6784_u7EFC_u8FF0"><a href="#u67B6_u6784_u7EFC_u8FF0" class="headerlink" title="架构综述"></a>架构综述</h2><p>Angular 2 是一个帮助我们用 Html 和 JavaScript 构建客户端程序的开发框架。 框架有几个相互配合的库组成，有些是核心库有些是可选的库。<br><a id="more"></a><br>我们的应用程序由：</p>
 <ul>
 <li>使用Angularized化的模板创作HTML模板</li>
@@ -191,6 +221,31 @@
   </entry>
   
   <entry>
+    <title><![CDATA[【HowTo】整理照片]]></title>
+    <link href="http://sivagao.com/2016-01/howto-photos-tidy/"/>
+    <id>http://sivagao.com/2016-01/howto-photos-tidy/</id>
+    <published>2016-01-31T13:21:57.000Z</published>
+    <updated>2016-01-31T13:21:57.000Z</updated>
+    <content type="html"><![CDATA[<p>这年头，专业的数码相机越来越便宜，同时手机自带的摄像头越来越专业。所以，一不小心可能大家手头的照片很容易攒个数千张。那些照片记录了当时的可爱时光，现在也不舍得删去，但是也静静待在手机/电脑的存储中，值到一天越来越小的可用空间提醒着你『是时候要收拾整理下了！』</p>
+<p>从照片这个话题说起来，需求链大概是这样的『拍摄，存储，整理，编辑修改创作，分享』等</p>
+<p>我们就先聊聊今天的主角 Google Photos 帮我们在存储和整理 这个关键步骤的替我们完成的事情。和国内使用的一些注意点。</p>
+<p>通过手机端 iOS APP，安装后进入简单的Google登录后，会提示备份，然后APP就会在后台开始漫长的上传（考虑到我们的网速 - 深圳联通，通过shadowsocks（部署在新加坡的aws节点），来连接Google photos的服务器），具体进度可以在智能助理中看到~</p>
+<p>上传完毕后，Google就开始了它的各种计算图像分析和识别（主要是meta信息处理，如geolocation地理位置，拍摄时间等）这样用于生成自动创建的事件『特定时间段通常一天的多张照片组成，按照拍摄时间和地理位置切分』，这样在手机上、浏览器上看到的就是一个非常顺畅的故事连环画了。这个功能的确是十分惊艳，好像其他家都没提供。<br><img src="/../images/QQ20160131-1.png" alt="QQ20160131-1"></p>
+<p>然后高质量的图片上传无限连免费的确很棒，因为很多时候我们并不需要那么大的原图。<br>自带的人脸识别，把照片中出现的人物识别出来并且以此聚集照片，是一个非常方便的找出人像的方法。（当然了Apple自带的iphoto也提供类似的功能，iphoto的根据geo生成的图片聚合也不错。）</p>
+<p>一句话，值得一试，大厂服务值得信赖~<br><img src="/../images/QQ20160131-2.png" alt="QQ20160131-2"><img src="/../images/QQ20160131-3.png" alt="QQ20160131-3"></p>
+<blockquote class="blockquote-center"><p>云时代，选好服务，不要再出现图片丢失的蠢事了~</p>
+</blockquote>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>这年头，专业的数码相机越来越便宜，同时手机自带的摄像头越来越专业。所以，一不小心可能大家手头的照片很容易攒个数千张。那些照片记录了当时的可爱时光，现在也不舍得删去，但是也静静待在手机/电脑的存储中，值到一天越来越小的可用空间提醒着你『是时候要收拾整理下了！』</p>
+<p>]]>
+    </summary>
+    
+      <category term="HowTo" scheme="http://sivagao.com/categories/HowTo/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[【读书笔记】今天也要用心过生活]]></title>
     <link href="http://sivagao.com/2016-01/book-note-lead-life-heartly-today/"/>
     <id>http://sivagao.com/2016-01/book-note-lead-life-heartly-today/</id>
@@ -347,7 +402,7 @@
     <link href="http://sivagao.com/2016-01/node-%E6%96%B0%E9%A1%B9%E7%9B%AE%E6%B3%A8%E6%84%8F%E7%82%B9-2016%E7%AF%87/"/>
     <id>http://sivagao.com/2016-01/node-新项目注意点-2016篇/</id>
     <published>2016-01-10T23:56:29.000Z</published>
-    <updated>2016-01-30T14:24:53.000Z</updated>
+    <updated>2016-01-31T13:21:50.000Z</updated>
     <content type="html"><![CDATA[<h2 id="u6B63_u6587"><a href="#u6B63_u6587" class="headerlink" title="正文"></a>正文</h2><p>16年开发 node 项目，会有什么不一样吗？！ 当然随着语言，工具，运行环境，开发方式的不断变化，你的 node 项目当然也需要不断的与时俱进，那么我们就依次来看看需要注意哪些问题吧。<br><a id="more"></a><br>目录</p>
 <ul>
 <li>现在开始使用 ES2015</li>
@@ -440,6 +495,8 @@
     
       <category term="Node.js" scheme="http://sivagao.com/tags/Node-js/"/>
     
+      <category term="技术" scheme="http://sivagao.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
   </entry>
   
   <entry>
@@ -447,7 +504,7 @@
     <link href="http://sivagao.com/2015-12/node-npm-scripts/"/>
     <id>http://sivagao.com/2015-12/node-npm-scripts/</id>
     <published>2015-12-29T23:56:29.000Z</published>
-    <updated>2016-01-30T14:09:52.000Z</updated>
+    <updated>2016-01-31T13:21:42.000Z</updated>
     <content type="html"><![CDATA[<h2 id="u7B80_u4ECB"><a href="#u7B80_u4ECB" class="headerlink" title="简介"></a>简介</h2><p>前端写node项目起来是很容易的，但是一些好的实践，一些提高开发效率，提高工程质量的方案如何快速无侵入的集成到 node development workflow 中起来，可能对刚上手的新人，或者是习惯了自己现有开发环境蜜罐的老人们是不那么容易的，所以该指南对一些常见问题和技巧进行收集和总结，为你的第一个 node 项目保驾护航！</p>
 <h2 id="Todo"><a href="#Todo" class="headerlink" title="Todo"></a>Todo</h2><ul>
 <li>[ ] 补完其余内容</li>
@@ -508,6 +565,8 @@
     
       <category term="Node.js" scheme="http://sivagao.com/tags/Node-js/"/>
     
+      <category term="技术" scheme="http://sivagao.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
   </entry>
   
   <entry>
@@ -515,7 +574,7 @@
     <link href="http://sivagao.com/2015-12/book-emotion-quanity/"/>
     <id>http://sivagao.com/2015-12/book-emotion-quanity/</id>
     <published>2015-12-22T23:56:29.000Z</published>
-    <updated>2016-01-30T14:32:51.000Z</updated>
+    <updated>2016-01-31T13:22:08.000Z</updated>
     <content type="html"><![CDATA[<p><a href="http://book.douban.com/subject/20386245/" target="_blank" rel="external">http://book.douban.com/subject/20386245/</a></p>
 <p>这本书是情商之父的新研究成果，是『情商：为什么情商比智商更重要』的升华和延生，内容强调了团队和领导情景下的情商讨论。</p>
 <p>我们如何做出决策， 如何发挥你大脑的和创造力， 如何调整最佳工作状态，如何建立良好的社交关系，如何有效的理解他人，如何提高网络时代的社交商，你适合什么样的领导风格。</p>
@@ -580,6 +639,8 @@
     
       <category term="Node.js" scheme="http://sivagao.com/tags/Node-js/"/>
     
+      <category term="读书" scheme="http://sivagao.com/categories/%E8%AF%BB%E4%B9%A6/"/>
+    
   </entry>
   
   <entry>
@@ -587,7 +648,7 @@
     <link href="http://sivagao.com/2015-12/node-gateway-choices/"/>
     <id>http://sivagao.com/2015-12/node-gateway-choices/</id>
     <published>2015-12-06T23:56:29.000Z</published>
-    <updated>2016-01-30T14:25:13.000Z</updated>
+    <updated>2016-01-31T13:21:46.000Z</updated>
     <content type="html"><![CDATA[<h2 id="API__u7F51_u5173"><a href="#API__u7F51_u5173" class="headerlink" title="API 网关"></a>API 网关</h2><p>具体 API 网关功能介绍请见<a href="https://github.com/gf-rd/blog/issues/3" target="_blank" rel="external">Node.js API gateway</a><br>具体 API 网关和微服务架构关系见<a href="https://github.com/gf-rd/blog/issues/10" target="_blank" rel="external">Node 接入层 - 微服务架构</a><br>该 api gateway 基于 loopback， 结合kraken.js框架。</p>
 <h3 id="u7279_u6027"><a href="#u7279_u6027" class="headerlink" title="特性"></a>特性</h3><ul>
 <li>开发时支持文件改动重启(remy/nodemon)</li>
@@ -643,6 +704,8 @@
     
       <category term="Node.js" scheme="http://sivagao.com/tags/Node-js/"/>
     
+      <category term="技术" scheme="http://sivagao.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
   </entry>
   
   <entry>
@@ -650,7 +713,7 @@
     <link href="http://sivagao.com/2015-11/node-mircoservices/"/>
     <id>http://sivagao.com/2015-11/node-mircoservices/</id>
     <published>2015-11-29T23:56:29.000Z</published>
-    <updated>2016-01-30T14:25:17.000Z</updated>
+    <updated>2016-01-31T13:21:44.000Z</updated>
     <content type="html"><![CDATA[<p>前言，文章作者是Chris Richardson，微服务领域的大牛。经常在<a href="http://microservices.io" target="_blank" rel="external">microservices.io</a>上发表有关微服务的文章。</p>
 <h2 id="u5FAE_u670D_u52A1_u7B80_u4ECB"><a href="#u5FAE_u670D_u52A1_u7B80_u4ECB" class="headerlink" title="微服务简介"></a>微服务简介</h2><h3 id="u5355_u4F53_u67B6_u6784"><a href="#u5355_u4F53_u67B6_u6784" class="headerlink" title="单体架构"></a>单体架构</h3><p>尽管也是模块化逻辑，但是最终它还是会打包并部署为单体式应用。<br>单体式应用也易于部署，只需要把打包应用拷贝到服务器端，通过在负载均衡器后端运行多个拷贝就可以轻松实现应用扩展。在早期这类应用运行的很好。</p>
 <h3 id="u5355_u4F53_u67B6_u6784_u7684_u4E0D_u8DB3"><a href="#u5355_u4F53_u67B6_u6784_u7684_u4E0D_u8DB3" class="headerlink" title="单体架构的不足"></a>单体架构的不足</h3><p>一个简单的应用会随着时间推移逐渐变大。在每次的sprint中，开发团队都会面对新“故事”，然后开发许多新代码。几年后，这个小而简单的应用会变成了一个巨大的怪物。<br>从而敏捷开发和部署都举步维艰，应用变得太复杂，以至于单个开发者不可能搞懂他。维护下变得很差，修改bug和添加新功能变得很困难.应用越大，启动时间会越长。<br>应用越大，启动时间会越长。一个模块是CPU密集的， 一个模块是内存占有大的，模块部署在一起的单体，不能不在硬件选择上做一个妥协。<br>可靠性很低，所有模块运行在一个进程中，任何一个模块中的一个bug，比如内存泄露，将会有可能弄垮整个进程。<br>单体式应用使得采用新架构和语言非常困难。比如，设想你有两百万行采用XYZ框架写的代码。如果想改成ABC框架，无论是时间还是成本都是非常昂贵的</p>
@@ -723,6 +786,8 @@
     
       <category term="Node.js" scheme="http://sivagao.com/tags/Node-js/"/>
     
+      <category term="技术" scheme="http://sivagao.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
   </entry>
   
   <entry>
@@ -730,7 +795,7 @@
     <link href="http://sivagao.com/2015-11/ionic-update/"/>
     <id>http://sivagao.com/2015-11/ionic-update/</id>
     <published>2015-11-18T23:56:29.000Z</published>
-    <updated>2016-01-30T14:06:46.000Z</updated>
+    <updated>2016-01-31T13:21:52.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>ionic deploy 和 Microsoft 的 code push，都是不支持增量更新的前端资源包下载更新。支持配置是否强制更新和推荐更新，支持changelog配置，支持不同channel推送更新。</p>
 <p>cordova-app-loader 和 gf’arms（设计状态）是支持前端资源包的增量更新。前者灵活精细稳健的接口和实现，为后续的扩展（如changelog 提示，更新的UI交互）都提供了强有力的支持。</p>
 <p>广发现有的做法，是通过容器内容后台（cordova’s android, ios 和 atom-shell）来推送打包好的容器包（apk, ipa with plist) 可以实现native代码的更新（如cordova 插件更新）这些是二进制包的更新，当然也可以推送内容包更新（如ionic deploy 和 M$的code push的做法）</p>
@@ -768,6 +833,8 @@
     
       <category term="混合应用" scheme="http://sivagao.com/tags/%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8/"/>
     
+      <category term="技术-前端开发" scheme="http://sivagao.com/categories/%E6%8A%80%E6%9C%AF-%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
   </entry>
   
   <entry>
@@ -775,7 +842,7 @@
     <link href="http://sivagao.com/2015-10/ionic-navigation-history/"/>
     <id>http://sivagao.com/2015-10/ionic-navigation-history/</id>
     <published>2015-10-30T10:56:29.000Z</published>
-    <updated>2016-01-30T14:06:51.000Z</updated>
+    <updated>2016-01-31T13:21:54.000Z</updated>
     <content type="html"><![CDATA[<h1 id="Ionic__u7CFB_u5217_-_Navigation__u548C_ionHistory__u8BE6_u89E3"><a href="#Ionic__u7CFB_u5217_-_Navigation__u548C_ionHistory__u8BE6_u89E3" class="headerlink" title="Ionic 系列 - Navigation 和 ionHistory 详解"></a>Ionic 系列 - Navigation 和 ionHistory 详解</h1><p>navigation，本身是个简单的概念。用户使用不同功能，在不同页面跳转，同时提供回退，前进功能来方便用户。但是遇到如下场景和需求就会让问题变得开始棘手起来。</p>
 <ul>
 <li>去做任务B，必须先完成A（甚至它还有前置任务），然后跳转回来。</li>
@@ -819,6 +886,8 @@
     
       <category term="混合应用" scheme="http://sivagao.com/tags/%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8/"/>
     
+      <category term="技术-前端开发" scheme="http://sivagao.com/categories/%E6%8A%80%E6%9C%AF-%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
   </entry>
   
   <entry>
@@ -826,7 +895,7 @@
     <link href="http://sivagao.com/2015-10/ionic-view-cache/"/>
     <id>http://sivagao.com/2015-10/ionic-view-cache/</id>
     <published>2015-10-29T23:56:29.000Z</published>
-    <updated>2016-01-30T14:25:03.000Z</updated>
+    <updated>2016-01-31T13:21:51.000Z</updated>
     <content type="html"><![CDATA[<h1 id="Ionic__u7CFB_u5217_-__u73A9_u8F6C_view_cache"><a href="#Ionic__u7CFB_u5217_-__u73A9_u8F6C_view_cache" class="headerlink" title="Ionic 系列 - 玩转 view cache"></a>Ionic 系列 - 玩转 view cache</h1><p>在默认情况下， views 是被缓存以便于提升性能。当view 切换时，该 view html element 依然是被保留在 DOM 树中的，而view 的 scope 被从 Angular $watch cycle 中抽离。所以当回到原先被cache的view中，scope 重新被加入到 $watch cycle 中 （因此之前的滚动位置都能保留，也不用等待页面元素重新被render）</p>
 <h2 id="u57FA_u672C_u7528_u6CD5"><a href="#u57FA_u672C_u7528_u6CD5" class="headerlink" title="基本用法"></a>基本用法</h2><p>viewcache 默认是保留 10 views（太多会吃爆你的内存），当然可以设置更多或关掉。 同时你也可以单独设置 view 的cache 开启情况</p>
 <ul>
@@ -854,6 +923,8 @@
     
       <category term="混合应用" scheme="http://sivagao.com/tags/%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8/"/>
     
+      <category term="技术-前端开发" scheme="http://sivagao.com/categories/%E6%8A%80%E6%9C%AF-%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
   </entry>
   
   <entry>
@@ -861,7 +932,7 @@
     <link href="http://sivagao.com/2015-09/book-note-$100-startups/"/>
     <id>http://sivagao.com/2015-09/book-note-$100-startups/</id>
     <published>2015-09-22T10:56:29.000Z</published>
-    <updated>2016-01-30T14:32:55.000Z</updated>
+    <updated>2016-01-31T13:22:06.000Z</updated>
     <content type="html"><![CDATA[<p>the $100 startup<br>reinvent the way you make a living, do what you love, and create a new future<br>重新定义你的生活工作，做你喜欢的，创造未来~<br>Ps： <a href="http://book.douban.com/subject/7015950/" target="_blank" rel="external">豆瓣链接</a><br><a id="more"></a> </p>
 <h2 id="contents"><a href="#contents" class="headerlink" title="contents"></a>contents</h2><p>prologue - manifesto a short guide to everything you want 你所需知道的一切在宣言中</p>
 <p>part 1: unexpected entrepreneurs 『另类』企业家</p>
@@ -1087,7 +1158,7 @@
     <link href="http://sivagao.com/2015-09/node-api-gateway/"/>
     <id>http://sivagao.com/2015-09/node-api-gateway/</id>
     <published>2015-09-20T23:56:29.000Z</published>
-    <updated>2016-01-30T14:01:53.000Z</updated>
+    <updated>2016-01-31T13:21:48.000Z</updated>
     <content type="html"><![CDATA[<p>一个API网关，可以外部整合，安全化，管理 APIs。它是API消费者（客户端程序）和后端API提供者（API服务器）之间的中介。</p>
 <p><img src="https://cloud.githubusercontent.com/assets/697853/9986621/7b7968ee-6071-11e5-89f7-88e151a0d6c1.png" alt="df82b234-5ddb-463c-bf54-10d0af0535e9"></p>
 <h3 id="API__u7F51_u5173_u7684_u4F5C_u7528"><a href="#API__u7F51_u5173_u7684_u4F5C_u7528" class="headerlink" title="API 网关的作用"></a>API 网关的作用</h3><table>
@@ -1163,6 +1234,8 @@
       <category term="JavaScript" scheme="http://sivagao.com/tags/JavaScript/"/>
     
       <category term="Node.js" scheme="http://sivagao.com/tags/Node-js/"/>
+    
+      <category term="技术" scheme="http://sivagao.com/categories/%E6%8A%80%E6%9C%AF/"/>
     
   </entry>
   
@@ -1301,7 +1374,7 @@
     <link href="http://sivagao.com/2015-09/angular-$http-feedback/"/>
     <id>http://sivagao.com/2015-09/angular-$http-feedback/</id>
     <published>2015-09-10T23:56:29.000Z</published>
-    <updated>2016-01-30T14:01:15.000Z</updated>
+    <updated>2016-01-31T13:22:02.000Z</updated>
     <content type="html"><![CDATA[<h3 id="u4E3A_u4EC0_u4E48"><a href="#u4E3A_u4EC0_u4E48" class="headerlink" title="为什么"></a>为什么</h3><p>用户在使用你的产品需要及时的反馈，譬如在拉取后端数据时候，在做了某些涉及后端的操作时，在消费数据时遇到某些莫名错误时。<br>同时，我们在开发的时候，如果对于这些通用的操作提示能够有全局的一致的UI/UX的话，可以继承进入 Angular 的$http 模块中，这样不需要在每次业务编写时都手动改下。 </p>
 <p>所以下面的 Http interceptor 主要解决如下三个问题：</p>
 <ul>
@@ -1336,6 +1409,8 @@
     
       <category term="JavaScript" scheme="http://sivagao.com/tags/JavaScript/"/>
     
+      <category term="技术-前端开发" scheme="http://sivagao.com/categories/%E6%8A%80%E6%9C%AF-%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
   </entry>
   
   <entry>
@@ -1343,7 +1418,7 @@
     <link href="http://sivagao.com/2015-08/angular-ngmocke2e-mock-data/"/>
     <id>http://sivagao.com/2015-08/angular-ngmocke2e-mock-data/</id>
     <published>2015-08-06T23:56:29.000Z</published>
-    <updated>2016-01-30T14:00:52.000Z</updated>
+    <updated>2016-01-31T13:22:00.000Z</updated>
     <content type="html"><![CDATA[<p>对于那些使用了 $http service 来网络请求的项目中，假冒(fake) HTTP 后端可以用来辅助实现 E2E 测试 或者是 无后端或不依赖后端的开发方式。</p>
 <p>注意：对于 假冒(fake) HTTP 后端来实现适合于单元测试的需求，请参阅单元测试 <code>$httpBackend mock</code>。</p>
 <p>该模块即包括了，用于构建静态或动态响应数据的拦截式  <code>when</code> api（推荐使用 whenGET, whenPOST 等快捷方法），也包括了如 <code>passthrough</code> 把请求放出的 api，用于一些特定的请求（例如与某些后端接口或从开发服务器gulp connect 中获取模板文件等）</p>
@@ -1364,6 +1439,8 @@
       <category term="Angular" scheme="http://sivagao.com/tags/Angular/"/>
     
       <category term="JavaScript" scheme="http://sivagao.com/tags/JavaScript/"/>
+    
+      <category term="技术-前端开发" scheme="http://sivagao.com/categories/%E6%8A%80%E6%9C%AF-%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
     
   </entry>
   

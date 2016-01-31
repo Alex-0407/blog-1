@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=5.0.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Nodejs, 前端, ES6" />
+  <meta name="keywords" content="Google, Photos, 'Google Photos', 数码照片" />
 
 
 
@@ -59,24 +59,25 @@
 
 
 
-<meta name="description" content="前言，文章作者是Chris Richardson，微服务领域的大牛。经常在microservices.io上发表有关微服务的文章。
-微服务简介单体架构尽管也是模块化逻辑，但是最终它还是会打包并部署为单体式应用。单体式应用也易于部署，只需要把打包应用拷贝到服务器端，通过在负载均衡器后端运行多个拷贝就可以轻松实现应用扩展。在早期这类应用运行的很好。
-单体架构的不足一个简单的应用会随着时间推移逐渐变大。">
+<meta name="description" content="这年头，专业的数码相机越来越便宜，同时手机自带的摄像头越来越专业。所以，一不小心可能大家手头的照片很容易攒个数千张。那些照片记录了当时的可爱时光，现在也不舍得删去，但是也静静待在手机/电脑的存储中，值到一天越来越小的可用空间提醒着你『是时候要收拾整理下了！』
+从照片这个话题说起来，需求链大概是这样的『拍摄，存储，整理，编辑修改创作，分享』等
+我们就先聊聊今天的主角 Google Photos 帮我">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【Node】Node 接入层 - 微服务架构">
-<meta property="og:url" content="http://sivagao.com/2015-11/node-mircoservices/index.html">
+<meta property="og:title" content="【HowTo】整理照片">
+<meta property="og:url" content="http://sivagao.com/2016-01/howto-photos-tidy/index.html">
 <meta property="og:site_name" content="Highway to the Wild">
-<meta property="og:description" content="前言，文章作者是Chris Richardson，微服务领域的大牛。经常在microservices.io上发表有关微服务的文章。
-微服务简介单体架构尽管也是模块化逻辑，但是最终它还是会打包并部署为单体式应用。单体式应用也易于部署，只需要把打包应用拷贝到服务器端，通过在负载均衡器后端运行多个拷贝就可以轻松实现应用扩展。在早期这类应用运行的很好。
-单体架构的不足一个简单的应用会随着时间推移逐渐变大。">
-<meta property="og:image" content="https://cloud.githubusercontent.com/assets/697853/11462376/5d3d46ac-974e-11e5-9cc5-cbc6349e2fc1.png">
-<meta property="og:image" content="https://cloud.githubusercontent.com/assets/697853/11462378/6c14da82-974e-11e5-92fe-4fb94bd86b83.png">
-<meta property="og:updated_time" content="2016-01-31T13:21:44.000Z">
+<meta property="og:description" content="这年头，专业的数码相机越来越便宜，同时手机自带的摄像头越来越专业。所以，一不小心可能大家手头的照片很容易攒个数千张。那些照片记录了当时的可爱时光，现在也不舍得删去，但是也静静待在手机/电脑的存储中，值到一天越来越小的可用空间提醒着你『是时候要收拾整理下了！』
+从照片这个话题说起来，需求链大概是这样的『拍摄，存储，整理，编辑修改创作，分享』等
+我们就先聊聊今天的主角 Google Photos 帮我">
+<meta property="og:image" content="http://sivagao.com/../images/QQ20160131-1.png">
+<meta property="og:image" content="http://sivagao.com/../images/QQ20160131-2.png">
+<meta property="og:image" content="http://sivagao.com/../images/QQ20160131-3.png">
+<meta property="og:updated_time" content="2016-01-31T13:21:57.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【Node】Node 接入层 - 微服务架构">
-<meta name="twitter:description" content="前言，文章作者是Chris Richardson，微服务领域的大牛。经常在microservices.io上发表有关微服务的文章。
-微服务简介单体架构尽管也是模块化逻辑，但是最终它还是会打包并部署为单体式应用。单体式应用也易于部署，只需要把打包应用拷贝到服务器端，通过在负载均衡器后端运行多个拷贝就可以轻松实现应用扩展。在早期这类应用运行的很好。
-单体架构的不足一个简单的应用会随着时间推移逐渐变大。">
+<meta name="twitter:title" content="【HowTo】整理照片">
+<meta name="twitter:description" content="这年头，专业的数码相机越来越便宜，同时手机自带的摄像头越来越专业。所以，一不小心可能大家手头的照片很容易攒个数千张。那些照片记录了当时的可爱时光，现在也不舍得删去，但是也静静待在手机/电脑的存储中，值到一天越来越小的可用空间提醒着你『是时候要收拾整理下了！』
+从照片这个话题说起来，需求链大概是这样的『拍摄，存储，整理，编辑修改创作，分享』等
+我们就先聊聊今天的主角 Google Photos 帮我">
 
 
 
@@ -94,7 +95,7 @@
   };
 </script>
 
-  <title> 【Node】Node 接入层 - 微服务架构 | Highway to the Wild </title>
+  <title> 【HowTo】整理照片 | Highway to the Wild </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -242,7 +243,7 @@
             
             
               
-                【Node】Node 接入层 - 微服务架构
+                【HowTo】整理照片
               
             
           </h1>
@@ -254,8 +255,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-11-30T07:56:29+08:00" content="2015-11-30">
-              2015-11-30
+            <time itemprop="dateCreated" datetime="2016-01-31T21:21:57+08:00" content="2016-01-31">
+              2016-01-31
             </time>
           </span>
 
@@ -268,8 +269,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/技术/" itemprop="url" rel="index">
-                    <span itemprop="name">技术</span>
+                  <a href="/categories/HowTo/" itemprop="url" rel="index">
+                    <span itemprop="name">HowTo</span>
                   </a>
                 </span>
 
@@ -284,8 +285,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015-11/node-mircoservices/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015-11/node-mircoservices/" itemprop="commentsCount"></span>
+                <a href="/2016-01/howto-photos-tidy/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016-01/howto-photos-tidy/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -295,7 +296,7 @@
 
           
           
-             <span id="/2015-11/node-mircoservices/" class="leancloud_visitors" data-flag-title="【Node】Node 接入层 - 微服务架构">
+             <span id="/2016-01/howto-photos-tidy/" class="leancloud_visitors" data-flag-title="【HowTo】整理照片">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -315,98 +316,36 @@
       
 
       
-        <p>前言，文章作者是Chris Richardson，微服务领域的大牛。经常在<a href="http://microservices.io" target="_blank" rel="external">microservices.io</a>上发表有关微服务的文章。</p>
-<h2 id="u5FAE_u670D_u52A1_u7B80_u4ECB"><a href="#u5FAE_u670D_u52A1_u7B80_u4ECB" class="headerlink" title="微服务简介"></a>微服务简介</h2><h3 id="u5355_u4F53_u67B6_u6784"><a href="#u5355_u4F53_u67B6_u6784" class="headerlink" title="单体架构"></a>单体架构</h3><p>尽管也是模块化逻辑，但是最终它还是会打包并部署为单体式应用。<br>单体式应用也易于部署，只需要把打包应用拷贝到服务器端，通过在负载均衡器后端运行多个拷贝就可以轻松实现应用扩展。在早期这类应用运行的很好。</p>
-<h3 id="u5355_u4F53_u67B6_u6784_u7684_u4E0D_u8DB3"><a href="#u5355_u4F53_u67B6_u6784_u7684_u4E0D_u8DB3" class="headerlink" title="单体架构的不足"></a>单体架构的不足</h3><p>一个简单的应用会随着时间推移逐渐变大。在每次的sprint中，开发团队都会面对新“故事”，然后开发许多新代码。几年后，这个小而简单的应用会变成了一个巨大的怪物。<br>从而敏捷开发和部署都举步维艰，应用变得太复杂，以至于单个开发者不可能搞懂他。维护下变得很差，修改bug和添加新功能变得很困难.应用越大，启动时间会越长。<br>应用越大，启动时间会越长。一个模块是CPU密集的， 一个模块是内存占有大的，模块部署在一起的单体，不能不在硬件选择上做一个妥协。<br>可靠性很低，所有模块运行在一个进程中，任何一个模块中的一个bug，比如内存泄露，将会有可能弄垮整个进程。<br>单体式应用使得采用新架构和语言非常困难。比如，设想你有两百万行采用XYZ框架写的代码。如果想改成ABC框架，无论是时间还是成本都是非常昂贵的</p>
-<h3 id="u5FAE_u670D_u52A1_u67B6_u6784"><a href="#u5FAE_u670D_u52A1_u67B6_u6784" class="headerlink" title="微服务架构"></a>微服务架构</h3><p>很多公司如amazon，ebay，netflix 等通过微服务架构解决以上问题，将应用分解为小的，相互连接的微服务。</p>
-<p>一个微服务一般完成某个特定的功能，比如下单管理、客户管理等等。一些微服务还会发布API给其它微服务和应用客户端使用。其它微服务完成一个Web UI，运行时，每一个实例可能是一个云VM或者是Docker容器。</p>
-<p>每一个后台服务开放一个REST API，许多服务本身也采用了其它服务提供的API。应用客户端（iOS，Android，web）不直接访问后台服务，而是通过 API Gateway 来传递消息。 其负责负载均衡，缓存，访问控制， API 计费和监控等任务。</p>
-<p>这种微服务架构模式深刻影响了应用和数据库之间的关系，不像传统多个服务共享一个数据库，微服务架构每个服务都有自己的数据库。</p>
-<h2 id="u5FAE_u670D_u52A1_u6A21_u5F0F"><a href="#u5FAE_u670D_u52A1_u6A21_u5F0F" class="headerlink" title="微服务模式"></a>微服务模式</h2><p><img src="https://cloud.githubusercontent.com/assets/697853/11462376/5d3d46ac-974e-11e5-9cc5-cbc6349e2fc1.png" alt="image"></p>
-<p>核心模式</p>
-<ul>
-<li>单体架构</li>
-<li>微服务架构</li>
-<li>API 网关</li>
-</ul>
-<p>部署模式</p>
-<ul>
-<li>multiple service instances per host</li>
-<li>service instance per host</li>
-<li>service instance per vm</li>
-<li>service instance per container</li>
-</ul>
-<p>服务发现</p>
-<ul>
-<li>客户端发现</li>
-<li>服务器端发现</li>
-<li>服务注册</li>
-<li>自行注册</li>
-<li>第三方注册</li>
-</ul>
-<p>数据层</p>
-<ul>
-<li>database per service</li>
-</ul>
-<p>Tip：</p>
-<ul>
-<li>The Monolithic architecture is an alternative to the microservices architecture.</li>
-<li>The API Gateway pattern defines how clients access the services in a microservices architecture.</li>
-<li>The Client-side Discovery and Server-side Discovery patterns are used to route requests for a client to an available service instance in a microservices architecture.</li>
-<li>The Messaging and Remote Procedure Invocation patterns are two different ways that services can communicate.</li>
-<li>The Single Service per Host and Multiple Services per Host patterns are two different deployment strategies.</li>
-<li>The Database per Service pattern describes how each service has its own database.</li>
-</ul>
-<p>PS:<br>其他的pattern，如 in the area of resiliency and stability. - circuit breaker pattern, stand-in services, or bulkheads.</p>
-<h2 id="u670D_u52A1_u53D1_u73B0"><a href="#u670D_u52A1_u53D1_u73B0" class="headerlink" title="服务发现"></a>服务发现</h2><h3 id="service_side__u670D_u52A1_u53D1_u73B0"><a href="#service_side__u670D_u52A1_u53D1_u73B0" class="headerlink" title="service side 服务发现"></a>service side 服务发现</h3><p><img src="https://cloud.githubusercontent.com/assets/697853/11462378/6c14da82-974e-11e5-92fe-4fb94bd86b83.png" alt="image"></p>
-<p>上下文：<br>服务通常需要调用其他服务.  在单体应用中， 服务的相互调用是通过程序语言层的方法或者是IPC。<br>在传统的分布式系统中， services run at fixed, well known locations(hosts and ports) and so can easily call one another using HTTP/REST or some RPC 机制。<br>在新的微服务架构中， application 通常泡在虚拟化或容器环境中（而服务的实例数量和位置可能会动态改变），所以需要一种机制来解决服务的调用方 to make requests to a dynamically changging set of ephemeral service instances(如根据负载情况，EC2 Autoscaling group adjust) 问题就是调用方（如 api gateway）如何discover the location of a service instance?</p>
-<p>关注点：</p>
-<p>解决方案：<br>When making a request to a service, the client makes a request via a router (a.k.a load balancer) that runs at a well known location. The router queries a service registry, which might be built into the router, and forwards the request to an available service instance.</p>
-<p>举例:<br>ELB<br>Some clustering solutions such as Kubernetes and Marathon run a proxy on each host that functions as a server-side discovery router. In order to access a service, a client connects to the local proxy using the port assigned to that service. The proxy then forwards the request to a service instance running somewhere in the cluster</p>
-<p>好坏对比:<br>好处：<br>对比 client-side discovery，client code is simpler since it does not have to deal with discovery. instead, a client simply makes a request to the router</p>
-<p>坏处：<br>router是个单独的系统需要安装和配置，也需要 replicated for availability and capacity<br>More network hops are required than when using Client side discovery</p>
-<h2 id="u6570_u636E_u5C42"><a href="#u6570_u636E_u5C42" class="headerlink" title="数据层"></a>数据层</h2><p>微服务下的数据库架构<br>keep each microservice’s persistent data private to that service and accessible only via its API.</p>
-<ul>
-<li>Private-tables-per-service – each service owns a set of tables that must only be accessed by that service</li>
-<li>Schema-per-service – each service has a database schema that’s private to that service</li>
-<li>Database-server-per-service – each service has it’s own database server.</li>
-</ul>
-<p>to create barriers that enforce this modularity.</p>
-<p>好坏对比:<br>好处：<br>服务是低耦合的。 changes to one service’s databases does not impact any other services<br>每个服务使用他们合适类型的数据库. text search - elasticsearch, 操作社会化图的用Neo4j</p>
-<p>坏处：<br>implement business transaction that span multiple services is not straightforward(分布式的事务要避免因为CAP. nosql通常不支持事务. 使用最终一致性的, event-driven architecture - )<br>queries that join data that is now in multiple database 很麻烦：</p>
-<ul>
-<li>application-side joins.</li>
-<li>CQRS command query responsibility segregation.<br>管理多个SQL和NoSQL数据库的复杂度</li>
-</ul>
+        <p>这年头，专业的数码相机越来越便宜，同时手机自带的摄像头越来越专业。所以，一不小心可能大家手头的照片很容易攒个数千张。那些照片记录了当时的可爱时光，现在也不舍得删去，但是也静静待在手机/电脑的存储中，值到一天越来越小的可用空间提醒着你『是时候要收拾整理下了！』</p>
+<p>从照片这个话题说起来，需求链大概是这样的『拍摄，存储，整理，编辑修改创作，分享』等</p>
+<p>我们就先聊聊今天的主角 Google Photos 帮我们在存储和整理 这个关键步骤的替我们完成的事情。和国内使用的一些注意点。</p>
+<p>通过手机端 iOS APP，安装后进入简单的Google登录后，会提示备份，然后APP就会在后台开始漫长的上传（考虑到我们的网速 - 深圳联通，通过shadowsocks（部署在新加坡的aws节点），来连接Google photos的服务器），具体进度可以在智能助理中看到~</p>
+<p>上传完毕后，Google就开始了它的各种计算图像分析和识别（主要是meta信息处理，如geolocation地理位置，拍摄时间等）这样用于生成自动创建的事件『特定时间段通常一天的多张照片组成，按照拍摄时间和地理位置切分』，这样在手机上、浏览器上看到的就是一个非常顺畅的故事连环画了。这个功能的确是十分惊艳，好像其他家都没提供。<br><img src="/../images/QQ20160131-1.png" alt="QQ20160131-1"></p>
+<p>然后高质量的图片上传无限连免费的确很棒，因为很多时候我们并不需要那么大的原图。<br>自带的人脸识别，把照片中出现的人物识别出来并且以此聚集照片，是一个非常方便的找出人像的方法。（当然了Apple自带的iphoto也提供类似的功能，iphoto的根据geo生成的图片聚合也不错。）</p>
+<p>一句话，值得一试，大厂服务值得信赖~<br><img src="/../images/QQ20160131-2.png" alt="QQ20160131-2"><img src="/../images/QQ20160131-3.png" alt="QQ20160131-3"></p>
+<blockquote class="blockquote-center"><p>云时代，选好服务，不要再出现图片丢失的蠢事了~</p>
+</blockquote>
 
       
     </div>
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/JavaScript/" rel="tag">#JavaScript</a>
-          
-            <a href="/tags/Node-js/" rel="tag">#Node.js</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015-11/ionic-update/" rel="next" title="【ionic】Ionic/cordova App 更新机制总结">
-                <i class="fa fa-chevron-left"></i> 【ionic】Ionic/cordova App 更新机制总结
+              <a href="/2016-01/book-note-lead-life-heartly-today/" rel="next" title="【读书笔记】今天也要用心过生活">
+                <i class="fa fa-chevron-left"></i> 【读书笔记】今天也要用心过生活
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015-12/node-gateway-choices/" rel="prev" title="【Node】Node 接入层 - 技术选型">
-                【Node】Node 接入层 - 技术选型 <i class="fa fa-chevron-right"></i>
+              <a href="/2016-01/angular2-transalte-angular2-overview/" rel="prev" title="【Angular2】开发指南 2. 架构综述">
+                【Angular2】开发指南 2. 架构综述 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -456,8 +395,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015-11/node-mircoservices/"
-           data-title="【Node】Node 接入层 - 微服务架构" data-url="http://sivagao.com/2015-11/node-mircoservices/">
+      <div class="ds-thread" data-thread-key="2016-01/howto-photos-tidy/"
+           data-title="【HowTo】整理照片" data-url="http://sivagao.com/2016-01/howto-photos-tidy/">
       </div>
     
   </div>
@@ -597,7 +536,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#u5FAE_u670D_u52A1_u7B80_u4ECB"><span class="nav-text">微服务简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#u5355_u4F53_u67B6_u6784"><span class="nav-text">单体架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5355_u4F53_u67B6_u6784_u7684_u4E0D_u8DB3"><span class="nav-text">单体架构的不足</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5FAE_u670D_u52A1_u67B6_u6784"><span class="nav-text">微服务架构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u5FAE_u670D_u52A1_u6A21_u5F0F"><span class="nav-text">微服务模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u670D_u52A1_u53D1_u73B0"><span class="nav-text">服务发现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#service_side__u670D_u52A1_u53D1_u73B0"><span class="nav-text">service side 服务发现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u6570_u636E_u5C42"><span class="nav-text">数据层</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

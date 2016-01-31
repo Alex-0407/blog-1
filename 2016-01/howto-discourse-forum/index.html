@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=5.0.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Nodejs, 前端, ES6" />
+  <meta name="keywords" content="HowTO" />
 
 
 
@@ -59,24 +59,23 @@
 
 
 
-<meta name="description" content="前言，文章作者是Chris Richardson，微服务领域的大牛。经常在microservices.io上发表有关微服务的文章。
-微服务简介单体架构尽管也是模块化逻辑，但是最终它还是会打包并部署为单体式应用。单体式应用也易于部署，只需要把打包应用拷贝到服务器端，通过在负载均衡器后端运行多个拷贝就可以轻松实现应用扩展。在早期这类应用运行的很好。
-单体架构的不足一个简单的应用会随着时间推移逐渐变大。">
+<meta name="description" content="起因很早就关注了数字游民这个话题，现在国内也慢慢的新起来，但是好像搜索了一圈以后没有什么论坛站点来聚集网友们。同时，国外的围绕着 nomad list 的 slack hashtag nomad 早就在那么圈子很火了。所以证明需求是有的，国内的发展也是可期的（虽然对于潜在的数字游民英语应该都不差），我还是非常想搭建这样的论坛来把牧民们汇集起来。
+选型这个几乎没什么好说的，slack 因为可以arc">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【Node】Node 接入层 - 微服务架构">
-<meta property="og:url" content="http://sivagao.com/2015-11/node-mircoservices/index.html">
+<meta property="og:title" content="【HowTo】一小时搭建个论坛 - Discourse 篇">
+<meta property="og:url" content="http://sivagao.com/2016-01/howto-discourse-forum/index.html">
 <meta property="og:site_name" content="Highway to the Wild">
-<meta property="og:description" content="前言，文章作者是Chris Richardson，微服务领域的大牛。经常在microservices.io上发表有关微服务的文章。
-微服务简介单体架构尽管也是模块化逻辑，但是最终它还是会打包并部署为单体式应用。单体式应用也易于部署，只需要把打包应用拷贝到服务器端，通过在负载均衡器后端运行多个拷贝就可以轻松实现应用扩展。在早期这类应用运行的很好。
-单体架构的不足一个简单的应用会随着时间推移逐渐变大。">
-<meta property="og:image" content="https://cloud.githubusercontent.com/assets/697853/11462376/5d3d46ac-974e-11e5-9cc5-cbc6349e2fc1.png">
-<meta property="og:image" content="https://cloud.githubusercontent.com/assets/697853/11462378/6c14da82-974e-11e5-92fe-4fb94bd86b83.png">
-<meta property="og:updated_time" content="2016-01-31T13:21:44.000Z">
+<meta property="og:description" content="起因很早就关注了数字游民这个话题，现在国内也慢慢的新起来，但是好像搜索了一圈以后没有什么论坛站点来聚集网友们。同时，国外的围绕着 nomad list 的 slack hashtag nomad 早就在那么圈子很火了。所以证明需求是有的，国内的发展也是可期的（虽然对于潜在的数字游民英语应该都不差），我还是非常想搭建这样的论坛来把牧民们汇集起来。
+选型这个几乎没什么好说的，slack 因为可以arc">
+<meta property="og:image" content="http://sivagao.com/../images/QQ20160131-3.jpg">
+<meta property="og:image" content="http://sivagao.com/../images/QQ20160131-0.jpg">
+<meta property="og:image" content="http://sivagao.com/../images/QQ20160131-2.jpg">
+<meta property="og:image" content="http://sivagao.com/../images/QQ20160131-1.jpg">
+<meta property="og:updated_time" content="2016-01-31T13:22:10.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【Node】Node 接入层 - 微服务架构">
-<meta name="twitter:description" content="前言，文章作者是Chris Richardson，微服务领域的大牛。经常在microservices.io上发表有关微服务的文章。
-微服务简介单体架构尽管也是模块化逻辑，但是最终它还是会打包并部署为单体式应用。单体式应用也易于部署，只需要把打包应用拷贝到服务器端，通过在负载均衡器后端运行多个拷贝就可以轻松实现应用扩展。在早期这类应用运行的很好。
-单体架构的不足一个简单的应用会随着时间推移逐渐变大。">
+<meta name="twitter:title" content="【HowTo】一小时搭建个论坛 - Discourse 篇">
+<meta name="twitter:description" content="起因很早就关注了数字游民这个话题，现在国内也慢慢的新起来，但是好像搜索了一圈以后没有什么论坛站点来聚集网友们。同时，国外的围绕着 nomad list 的 slack hashtag nomad 早就在那么圈子很火了。所以证明需求是有的，国内的发展也是可期的（虽然对于潜在的数字游民英语应该都不差），我还是非常想搭建这样的论坛来把牧民们汇集起来。
+选型这个几乎没什么好说的，slack 因为可以arc">
 
 
 
@@ -94,7 +93,7 @@
   };
 </script>
 
-  <title> 【Node】Node 接入层 - 微服务架构 | Highway to the Wild </title>
+  <title> 【HowTo】一小时搭建个论坛 - Discourse 篇 | Highway to the Wild </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -242,7 +241,7 @@
             
             
               
-                【Node】Node 接入层 - 微服务架构
+                【HowTo】一小时搭建个论坛 - Discourse 篇
               
             
           </h1>
@@ -254,8 +253,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-11-30T07:56:29+08:00" content="2015-11-30">
-              2015-11-30
+            <time itemprop="dateCreated" datetime="2016-01-31T21:22:10+08:00" content="2016-01-31">
+              2016-01-31
             </time>
           </span>
 
@@ -268,8 +267,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/技术/" itemprop="url" rel="index">
-                    <span itemprop="name">技术</span>
+                  <a href="/categories/HowTo/" itemprop="url" rel="index">
+                    <span itemprop="name">HowTo</span>
                   </a>
                 </span>
 
@@ -284,8 +283,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015-11/node-mircoservices/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015-11/node-mircoservices/" itemprop="commentsCount"></span>
+                <a href="/2016-01/howto-discourse-forum/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016-01/howto-discourse-forum/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -295,7 +294,7 @@
 
           
           
-             <span id="/2015-11/node-mircoservices/" class="leancloud_visitors" data-flag-title="【Node】Node 接入层 - 微服务架构">
+             <span id="/2016-01/howto-discourse-forum/" class="leancloud_visitors" data-flag-title="【HowTo】一小时搭建个论坛 - Discourse 篇">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -315,99 +314,39 @@
       
 
       
-        <p>前言，文章作者是Chris Richardson，微服务领域的大牛。经常在<a href="http://microservices.io" target="_blank" rel="external">microservices.io</a>上发表有关微服务的文章。</p>
-<h2 id="u5FAE_u670D_u52A1_u7B80_u4ECB"><a href="#u5FAE_u670D_u52A1_u7B80_u4ECB" class="headerlink" title="微服务简介"></a>微服务简介</h2><h3 id="u5355_u4F53_u67B6_u6784"><a href="#u5355_u4F53_u67B6_u6784" class="headerlink" title="单体架构"></a>单体架构</h3><p>尽管也是模块化逻辑，但是最终它还是会打包并部署为单体式应用。<br>单体式应用也易于部署，只需要把打包应用拷贝到服务器端，通过在负载均衡器后端运行多个拷贝就可以轻松实现应用扩展。在早期这类应用运行的很好。</p>
-<h3 id="u5355_u4F53_u67B6_u6784_u7684_u4E0D_u8DB3"><a href="#u5355_u4F53_u67B6_u6784_u7684_u4E0D_u8DB3" class="headerlink" title="单体架构的不足"></a>单体架构的不足</h3><p>一个简单的应用会随着时间推移逐渐变大。在每次的sprint中，开发团队都会面对新“故事”，然后开发许多新代码。几年后，这个小而简单的应用会变成了一个巨大的怪物。<br>从而敏捷开发和部署都举步维艰，应用变得太复杂，以至于单个开发者不可能搞懂他。维护下变得很差，修改bug和添加新功能变得很困难.应用越大，启动时间会越长。<br>应用越大，启动时间会越长。一个模块是CPU密集的， 一个模块是内存占有大的，模块部署在一起的单体，不能不在硬件选择上做一个妥协。<br>可靠性很低，所有模块运行在一个进程中，任何一个模块中的一个bug，比如内存泄露，将会有可能弄垮整个进程。<br>单体式应用使得采用新架构和语言非常困难。比如，设想你有两百万行采用XYZ框架写的代码。如果想改成ABC框架，无论是时间还是成本都是非常昂贵的</p>
-<h3 id="u5FAE_u670D_u52A1_u67B6_u6784"><a href="#u5FAE_u670D_u52A1_u67B6_u6784" class="headerlink" title="微服务架构"></a>微服务架构</h3><p>很多公司如amazon，ebay，netflix 等通过微服务架构解决以上问题，将应用分解为小的，相互连接的微服务。</p>
-<p>一个微服务一般完成某个特定的功能，比如下单管理、客户管理等等。一些微服务还会发布API给其它微服务和应用客户端使用。其它微服务完成一个Web UI，运行时，每一个实例可能是一个云VM或者是Docker容器。</p>
-<p>每一个后台服务开放一个REST API，许多服务本身也采用了其它服务提供的API。应用客户端（iOS，Android，web）不直接访问后台服务，而是通过 API Gateway 来传递消息。 其负责负载均衡，缓存，访问控制， API 计费和监控等任务。</p>
-<p>这种微服务架构模式深刻影响了应用和数据库之间的关系，不像传统多个服务共享一个数据库，微服务架构每个服务都有自己的数据库。</p>
-<h2 id="u5FAE_u670D_u52A1_u6A21_u5F0F"><a href="#u5FAE_u670D_u52A1_u6A21_u5F0F" class="headerlink" title="微服务模式"></a>微服务模式</h2><p><img src="https://cloud.githubusercontent.com/assets/697853/11462376/5d3d46ac-974e-11e5-9cc5-cbc6349e2fc1.png" alt="image"></p>
-<p>核心模式</p>
-<ul>
-<li>单体架构</li>
-<li>微服务架构</li>
-<li>API 网关</li>
-</ul>
-<p>部署模式</p>
-<ul>
-<li>multiple service instances per host</li>
-<li>service instance per host</li>
-<li>service instance per vm</li>
-<li>service instance per container</li>
-</ul>
-<p>服务发现</p>
-<ul>
-<li>客户端发现</li>
-<li>服务器端发现</li>
-<li>服务注册</li>
-<li>自行注册</li>
-<li>第三方注册</li>
-</ul>
-<p>数据层</p>
-<ul>
-<li>database per service</li>
-</ul>
-<p>Tip：</p>
-<ul>
-<li>The Monolithic architecture is an alternative to the microservices architecture.</li>
-<li>The API Gateway pattern defines how clients access the services in a microservices architecture.</li>
-<li>The Client-side Discovery and Server-side Discovery patterns are used to route requests for a client to an available service instance in a microservices architecture.</li>
-<li>The Messaging and Remote Procedure Invocation patterns are two different ways that services can communicate.</li>
-<li>The Single Service per Host and Multiple Services per Host patterns are two different deployment strategies.</li>
-<li>The Database per Service pattern describes how each service has its own database.</li>
-</ul>
-<p>PS:<br>其他的pattern，如 in the area of resiliency and stability. - circuit breaker pattern, stand-in services, or bulkheads.</p>
-<h2 id="u670D_u52A1_u53D1_u73B0"><a href="#u670D_u52A1_u53D1_u73B0" class="headerlink" title="服务发现"></a>服务发现</h2><h3 id="service_side__u670D_u52A1_u53D1_u73B0"><a href="#service_side__u670D_u52A1_u53D1_u73B0" class="headerlink" title="service side 服务发现"></a>service side 服务发现</h3><p><img src="https://cloud.githubusercontent.com/assets/697853/11462378/6c14da82-974e-11e5-92fe-4fb94bd86b83.png" alt="image"></p>
-<p>上下文：<br>服务通常需要调用其他服务.  在单体应用中， 服务的相互调用是通过程序语言层的方法或者是IPC。<br>在传统的分布式系统中， services run at fixed, well known locations(hosts and ports) and so can easily call one another using HTTP/REST or some RPC 机制。<br>在新的微服务架构中， application 通常泡在虚拟化或容器环境中（而服务的实例数量和位置可能会动态改变），所以需要一种机制来解决服务的调用方 to make requests to a dynamically changging set of ephemeral service instances(如根据负载情况，EC2 Autoscaling group adjust) 问题就是调用方（如 api gateway）如何discover the location of a service instance?</p>
-<p>关注点：</p>
-<p>解决方案：<br>When making a request to a service, the client makes a request via a router (a.k.a load balancer) that runs at a well known location. The router queries a service registry, which might be built into the router, and forwards the request to an available service instance.</p>
-<p>举例:<br>ELB<br>Some clustering solutions such as Kubernetes and Marathon run a proxy on each host that functions as a server-side discovery router. In order to access a service, a client connects to the local proxy using the port assigned to that service. The proxy then forwards the request to a service instance running somewhere in the cluster</p>
-<p>好坏对比:<br>好处：<br>对比 client-side discovery，client code is simpler since it does not have to deal with discovery. instead, a client simply makes a request to the router</p>
-<p>坏处：<br>router是个单独的系统需要安装和配置，也需要 replicated for availability and capacity<br>More network hops are required than when using Client side discovery</p>
-<h2 id="u6570_u636E_u5C42"><a href="#u6570_u636E_u5C42" class="headerlink" title="数据层"></a>数据层</h2><p>微服务下的数据库架构<br>keep each microservice’s persistent data private to that service and accessible only via its API.</p>
-<ul>
-<li>Private-tables-per-service – each service owns a set of tables that must only be accessed by that service</li>
-<li>Schema-per-service – each service has a database schema that’s private to that service</li>
-<li>Database-server-per-service – each service has it’s own database server.</li>
-</ul>
-<p>to create barriers that enforce this modularity.</p>
-<p>好坏对比:<br>好处：<br>服务是低耦合的。 changes to one service’s databases does not impact any other services<br>每个服务使用他们合适类型的数据库. text search - elasticsearch, 操作社会化图的用Neo4j</p>
-<p>坏处：<br>implement business transaction that span multiple services is not straightforward(分布式的事务要避免因为CAP. nosql通常不支持事务. 使用最终一致性的, event-driven architecture - )<br>queries that join data that is now in multiple database 很麻烦：</p>
-<ul>
-<li>application-side joins.</li>
-<li>CQRS command query responsibility segregation.<br>管理多个SQL和NoSQL数据库的复杂度</li>
-</ul>
+        <h3 id="u8D77_u56E0"><a href="#u8D77_u56E0" class="headerlink" title="起因"></a>起因</h3><p>很早就关注了数字游民这个话题，现在国内也慢慢的新起来，但是好像搜索了一圈以后没有什么论坛站点来聚集网友们。同时，国外的围绕着 nomad list 的 slack hashtag nomad 早就在那么圈子很火了。所以证明需求是有的，国内的发展也是可期的（虽然对于潜在的数字游民英语应该都不差），我还是非常想搭建这样的论坛来把牧民们汇集起来。</p>
+<h3 id="u9009_u578B"><a href="#u9009_u578B" class="headerlink" title="选型"></a>选型</h3><p>这个几乎没什么好说的，slack 因为可以archive 聊天信息，甚至可以给特定信息 highlight，有作为社区的潜质，但是它更多还仅仅是个聊天工具~ 其他诸如Discuz，NodeBB 都是过去时了，样式和玩法太老旧了。通用的平台也不够强大（如贴吧太low，豆瓣小组太简单，其他web上不容易搜索如陌陌，same等）。但是之前玩 ionic 时候对 forum.ionic.com 一直很喜欢，所以毫不犹豫的选择了 <a href="http://www.discourse.org/" target="_blank" rel="external">Discourse</a> 。事实证明它的确很棒（虽然是 Ember 框架写的）<br><img src="/../images/QQ20160131-3.jpg" alt="QQ20160131-3"></p>
+<h3 id="u8FC7_u7A0B"><a href="#u8FC7_u7A0B" class="headerlink" title="过程"></a>过程</h3><p>这个部署按照我的一开始打算应该是容易迁移和部署的。 所以毫无疑问选了 <a href="https://github.com/discourse/discourse_docker" target="_blank" rel="external">docker镜像</a>。 具体安装步骤和设置更改有<a href="https://github.com/discourse/discourse/blob/master/docs/INSTALL-cloud.md" target="_blank" rel="external">安装文档</a></p>
+<p>所以，我毫不犹豫选择了我免费一年的aws套餐 ec2 实例开始折腾：</p>
+<h4 id="ssh__u5230_u673A_u5668"><a href="#ssh__u5230_u673A_u5668" class="headerlink" title="ssh 到机器"></a>ssh 到机器</h4><h4 id="u6253_u5F00_docker_daemon"><a href="#u6253_u5F00_docker_daemon" class="headerlink" title="打开 docker daemon"></a>打开 docker daemon</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cannot connect to the docker daemon:&#10;docker daemon // -d &#36873;&#39033;&#20808;&#21551;&#21160;&#10;service docker stop&#10;ps aux|grep docker &#31561;</span><br></pre></td></tr></table></figure>
+<h4 id="u4E0B_u8F7D_u4EE3_u7801"><a href="#u4E0B_u8F7D_u4EE3_u7801" class="headerlink" title="下载代码"></a>下载代码</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /var/discourse&#10;git clone https://github.com/discourse/discourse_docker.git /var/discourse&#10;cd /var/discourse&#10;cp samples/standalone.yml containers/app.yml</span><br></pre></td></tr></table></figure>
+<h4 id="u4FEE_u6539_u914D_u7F6E"><a href="#u4FEE_u6539_u914D_u7F6E" class="headerlink" title="修改配置"></a>修改配置</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#20027;&#35201;&#26159;developer email&#65292;&#21518;&#38754;&#27880;&#20876;&#29992;&#36825;&#20010;email&#27880;&#20876;&#20250;&#33258;&#21160;&#26377;admin&#36523;&#20221;&#10;&#10;&#37038;&#20214;&#26381;&#21153;&#36873;&#25321;&#65306;smtp &#26381;&#21153; mailgun &#21518;&#21488;&#10;&#35774;&#32622;&#19968;&#30058;&#21518;&#25214;&#21040;&#37197;&#32622;&#39033; DISCOURSE_SMTP_ADDRESS&#65292;DISCOURSE_SMTP_PORT&#65292;DISCOURSE_SMTP_USER_NAME&#65292;DISCOURSE_SMTP_PASSWORD &#31561;&#10;&#32852;&#31995;&#20102;&#19979; mailgun &#30340;&#20154;&#65292;&#37038;&#31665;&#21448;&#33021;&#29992;&#20102;&#65292;&#20043;&#21069;&#34987;disable&#25481;&#10;&#21487;&#20197;&#30475;&#21457;&#36865;&#25968;&#25454;&#21644;log&#65292;&#25171;&#24320;&#21040;&#36798;&#29575;&#31561;&#31561; &#21518;&#21488; https://mailgun.com/app/logs/&#10;todo: &#28155;&#21152; txt &#35760;&#24405;dnspod &#20351;&#24471;&#21487;&#20197;&#29992;sivagao.com &#21457;&#36865;&#37038;&#20214; custom domain&#10;&#10;&#22240;&#20026;aws ec2 &#20813;&#36153;&#26426;&#22120;&#30340;&#20869;&#23384;&#19981;&#22815;&#65292;&#25152;&#20197;&#35201;&#20462;&#25913;&#37197;&#32622; UNICORN_WORKERS &#65306;2 &#20004;&#20010;&#23454;&#20363;&#65292;128M &#26469;&#32531;&#23384;&#31561;</span><br></pre></td></tr></table></figure>
+<p>一开始邮件发不了，但是没法激活。通过<a href="https://meta.discourse.org/t/create-admin-account-from-console/17274" target="_blank" rel="external">命令行来创建管理员帐号</a></p>
+<h4 id="u7F16_u8BD1_u548C_u542F_u52A8"><a href="#u7F16_u8BD1_u548C_u542F_u52A8" class="headerlink" title="编译和启动"></a>编译和启动</h4><p>./launcher bootstrap app #大概几分钟，中间还提示机器不够用…<br>./launcher start app</p>
+<p>配置 DNS，需要添加一个 A 记录，来把 discourse.sivagao.com 打到 aws机器上。</p>
+<h4 id="u7AD9_u70B9_u540E_u53F0_u548C_u914D_u7F6E"><a href="#u7AD9_u70B9_u540E_u53F0_u548C_u914D_u7F6E" class="headerlink" title="站点后台和配置"></a>站点后台和配置</h4><p>很顺畅的就部署完毕，浏览器访问一切正常。进入后台设置站点名称和logo（用keynote和两款漂亮的字体搞定），系统语言等。并且把一些文章如welcome欢迎页等建立起来</p>
+<p><img src="/../images/QQ20160131-0.jpg" alt="QQ20160131-0"></p>
+<p><img src="/../images/QQ20160131-2.jpg" alt="QQ20160131-2"></p>
+<p><img src="/../images/QQ20160131-1.jpg" alt="QQ20160131-1"></p>
+<h3 id="u4E0A_u7EBF_u5566_uFF0C_u6492_u82B1"><a href="#u4E0A_u7EBF_u5566_uFF0C_u6492_u82B1" class="headerlink" title="上线啦，撒花"></a>上线啦，撒花</h3><p><a href="http://discourse.sivagao.com" target="_blank" rel="external">欢迎光临 - 数字游民</a></p>
 
       
     </div>
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/JavaScript/" rel="tag">#JavaScript</a>
-          
-            <a href="/tags/Node-js/" rel="tag">#Node.js</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015-11/ionic-update/" rel="next" title="【ionic】Ionic/cordova App 更新机制总结">
-                <i class="fa fa-chevron-left"></i> 【ionic】Ionic/cordova App 更新机制总结
+              <a href="/2016-01/angular2-transalte-angular2-overview/" rel="next" title="【Angular2】开发指南 2. 架构综述">
+                <i class="fa fa-chevron-left"></i> 【Angular2】开发指南 2. 架构综述
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015-12/node-gateway-choices/" rel="prev" title="【Node】Node 接入层 - 技术选型">
-                【Node】Node 接入层 - 技术选型 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -456,8 +395,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015-11/node-mircoservices/"
-           data-title="【Node】Node 接入层 - 微服务架构" data-url="http://sivagao.com/2015-11/node-mircoservices/">
+      <div class="ds-thread" data-thread-key="2016-01/howto-discourse-forum/"
+           data-title="【HowTo】一小时搭建个论坛 - Discourse 篇" data-url="http://sivagao.com/2016-01/howto-discourse-forum/">
       </div>
     
   </div>
@@ -597,7 +536,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#u5FAE_u670D_u52A1_u7B80_u4ECB"><span class="nav-text">微服务简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#u5355_u4F53_u67B6_u6784"><span class="nav-text">单体架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5355_u4F53_u67B6_u6784_u7684_u4E0D_u8DB3"><span class="nav-text">单体架构的不足</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5FAE_u670D_u52A1_u67B6_u6784"><span class="nav-text">微服务架构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u5FAE_u670D_u52A1_u6A21_u5F0F"><span class="nav-text">微服务模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u670D_u52A1_u53D1_u73B0"><span class="nav-text">服务发现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#service_side__u670D_u52A1_u53D1_u73B0"><span class="nav-text">service side 服务发现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u6570_u636E_u5C42"><span class="nav-text">数据层</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#u8D77_u56E0"><span class="nav-text">起因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u9009_u578B"><span class="nav-text">选型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u8FC7_u7A0B"><span class="nav-text">过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ssh__u5230_u673A_u5668"><span class="nav-text">ssh 到机器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u6253_u5F00_docker_daemon"><span class="nav-text">打开 docker daemon</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u4E0B_u8F7D_u4EE3_u7801"><span class="nav-text">下载代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u4FEE_u6539_u914D_u7F6E"><span class="nav-text">修改配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u7F16_u8BD1_u548C_u542F_u52A8"><span class="nav-text">编译和启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u7AD9_u70B9_u540E_u53F0_u548C_u914D_u7F6E"><span class="nav-text">站点后台和配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u4E0A_u7EBF_u5566_uFF0C_u6492_u82B1"><span class="nav-text">上线啦，撒花</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
